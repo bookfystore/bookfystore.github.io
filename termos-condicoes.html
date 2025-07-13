@@ -20,27 +20,141 @@
             line-height: 1.6;
         }
 
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
         .header {
             background: #1a365d;
-            color: white;
-            padding: 1rem 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            animation: slideInRight 0.8s ease-out;
         }
 
         .nav {
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            padding: 0 1rem;
+            padding: 1rem 2rem;
         }
 
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            text-decoration: none;
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-img {
+            max-height: 60px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
             color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #a0aec0;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: #2b6cb0;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cart-icon {
+            position: relative;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.75rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .cart-icon:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #e53e3e;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            animation: pulse 2s infinite;
         }
 
         .container {
@@ -48,74 +162,59 @@
             margin: 2rem auto;
             padding: 2rem;
             background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: fadeInUp 0.8s ease-out;
         }
 
-        h1 {
+        .page-title {
             font-size: 2.5rem;
+            font-weight: 700;
             color: #1a365d;
-            margin-bottom: 1.5rem;
             text-align: center;
+            margin-bottom: 2rem;
         }
 
-        h2 {
+        .content-section {
+            margin-bottom: 2rem;
+        }
+
+        .content-section h2 {
             font-size: 1.8rem;
-            color: #2c5282;
-            margin-top: 2rem;
+            color: #1a365d;
             margin-bottom: 1rem;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 2px solid #e2e8f0;
             padding-bottom: 0.5rem;
         }
 
-        h3 {
+        .content-section h3 {
             font-size: 1.4rem;
-            color: #4a5568;
+            color: #2b6cb0;
             margin-top: 1.5rem;
             margin-bottom: 0.8rem;
         }
 
-        p {
+        .content-section p {
             margin-bottom: 1rem;
             color: #4a5568;
         }
 
-        ul {
+        .content-section ol {
+            list-style: decimal;
+            margin-left: 1.5rem;
             margin-bottom: 1rem;
-            padding-left: 1.5rem;
+            color: #4a5568;
         }
 
-        li {
+        .content-section ol li {
             margin-bottom: 0.5rem;
-            color: #4a5568;
-        }
-
-        strong {
-            color: #1a365d;
-        }
-
-        .back-btn {
-            background: transparent;
-            color: #1a365d;
-            border: 2px solid #1a365d;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-bottom: 2rem;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .back-btn:hover {
-            background: #1a365d;
-            color: white;
         }
 
         .footer {
             background: #2d3748;
             color: white;
             text-align: center;
-            padding: 2rem 1rem;
+            padding: 3rem 2rem;
             margin-top: 4rem;
         }
 
@@ -139,33 +238,55 @@
             color: #a0aec0;
         }
 
+        .footer p {
+            opacity: 0.8;
+        }
+
         @media (max-width: 768px) {
+            .nav {
+                padding: 1rem;
+            }
+            .logo-img {
+                max-height: 50px;
+            }
+            .logo-text {
+                font-size: 1.5rem;
+            }
+            .cart-icon {
+                padding: 0.6rem;
+            }
+            .cart-count {
+                width: 20px;
+                height: 20px;
+                font-size: 0.7rem;
+            }
+
             .container {
                 padding: 1.5rem;
                 margin: 1rem auto;
             }
-            h1 {
+            .page-title {
                 font-size: 2rem;
+                margin-bottom: 1.5rem;
             }
-            h2 {
+            .content-section h2 {
                 font-size: 1.5rem;
+                margin-bottom: 0.8rem;
             }
-            h3 {
+            .content-section h3 {
                 font-size: 1.2rem;
+                margin-top: 1rem;
+                margin-bottom: 0.6rem;
             }
-            p, li {
+            .content-section p, .content-section ol li {
                 font-size: 0.95rem;
             }
-            .back-btn {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.9rem;
-            }
             .footer {
-                padding: 1.5rem 1rem;
+                padding: 2rem 1rem;
             }
             .footer-links {
                 gap: 1rem;
-                font-size: 0.85rem;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -173,72 +294,87 @@
 <body>
     <header class="header">
         <nav class="nav">
-            <a href="index.html" class="logo">📚 BookFY</a>
+            <div class="logo-container">
+                <img src="https://i.imgur.com/5wDerGV.png" alt="BookFY" class="logo-img">
+                <a href="index.html" class="logo-text">BookFY</a>
+            </div>
+            <div class="nav-links">
+                <a href="carrinho.html">
+                    <div class="cart-icon">
+                        🛒
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </a>
+            </div>
         </nav>
     </header>
 
     <main class="container">
-        <a href="index.html" class="back-btn">← Voltar para a Loja</a>
-        <h1>Termos e Condições de Uso da BookFY</h1>
-        <p>Última atualização: 13 de Julho de 2025</p>
+        <h1 class="page-title">Termos e Condições de Uso</h1>
 
-        <p>Bem-vindo(a) à BookFY! Ao acessar e utilizar nosso site e serviços, você concorda em cumprir e estar vinculado(a) aos seguintes Termos e Condições de Uso. Por favor, leia-os atentamente.</p>
+        <section class="content-section">
+            <h2>1. Aceitação dos Termos</h2>
+            <p>Ao acessar e utilizar o site da BookFY, você concorda em cumprir e estar vinculado a estes Termos e Condições de Uso, bem como à nossa Política de Privacidade. Se você não concordar com qualquer parte destes termos, não deverá utilizar nossos serviços.</p>
+        </section>
 
-        <h2>1. Aceitação dos Termos</h2>
-        <p>Ao utilizar a BookFY, você declara que leu, compreendeu e aceita estes Termos e Condições, bem como nossa Política de Privacidade. Se você não concordar com qualquer parte destes termos, não deverá utilizar nossos serviços.</p>
+        <section class="content-section">
+            <h2>2. Uso do Site</h2>
+            <ol>
+                <li>Você deve ter pelo menos 18 anos de idade para realizar compras em nosso site.</li>
+                <li>Você é responsável por manter a confidencialidade de sua conta e senha e por restringir o acesso ao seu computador.</li>
+                <li>Você concorda em não utilizar o site para fins ilegais ou não autorizados.</li>
+            </ol>
+        </section>
 
-        <h2>2. Serviços Oferecidos</h2>
-        <p>A BookFY é uma plataforma de e-commerce dedicada à venda de e-books (livros digitais). Nosso objetivo é proporcionar uma experiência de compra fácil e segura para os amantes da leitura.</p>
+        <section class="content-section">
+            <h2>3. Produtos e Preços</h2>
+            <ol>
+                <li>A BookFY se esforça para garantir que as informações sobre produtos e preços sejam precisas, mas erros podem ocorrer. Reservamo-nos o direito de corrigir quaisquer erros e de alterar preços a qualquer momento.</li>
+                <li>As imagens dos produtos são meramente ilustrativas.</li>
+            </ol>
+        </section>
 
-        <h2>3. Cadastro e Conta do Usuário</h2>
-        <ul>
-            <li>Para realizar compras, você pode precisar fornecer informações pessoais como nome, e-mail e endereço.</li>
-            <li>Você é responsável por manter a confidencialidade de suas informações de conta e por todas as atividades que ocorrem sob sua conta.</li>
-            <li>Você concorda em fornecer informações verdadeiras, precisas, atuais e completas durante o processo de compra.</li>
-        </ul>
+        <section class="content-section">
+            <h2>4. Pedidos e Pagamentos</h2>
+            <ol>
+                <li>Todos os pedidos estão sujeitos à disponibilidade e à nossa confirmação.</li>
+                <li>Aceitamos diversas formas de pagamento, conforme indicado no processo de checkout.</li>
+                <li>As informações de pagamento são processadas por terceiros seguros e não são armazenadas em nossos servidores.</li>
+            </ol>
+        </section>
 
-        <h2>4. Compras de E-books</h2>
-        <ul>
-            <li><strong>Preços:</strong> Os preços dos e-books são exibidos em Reais (R$) e podem ser alterados a qualquer momento sem aviso prévio.</li>
-            <li><strong>Disponibilidade:</strong> A disponibilidade dos e-books está sujeita a alterações. Em caso de indisponibilidade após a compra, entraremos em contato para oferecer uma solução.</li>
-            <li><strong>Entrega:</strong> Como se trata de e-books, a entrega é digital. Após a confirmação do pagamento, você receberá instruções para acesso ou download do e-book.</li>
-            <li><strong>Pagamento:</strong> O pagamento é finalizado via WhatsApp, onde você combinará a forma de pagamento diretamente com a BookFY.</li>
-        </ul>
+        <section class="content-section">
+            <h2>5. Entrega</h2>
+            <ol>
+                <li>Os prazos de entrega são estimativas e podem variar.</li>
+                <li>A BookFY não se responsabiliza por atrasos na entrega causados por terceiros ou por eventos de força maior.</li>
+            </ol>
+        </section>
 
-        <h2>5. Direitos Autorais e Propriedade Intelectual</h2>
-        <ul>
-            <li>Todos os e-books e conteúdos digitais disponíveis na BookFY são protegidos por leis de direitos autorais e propriedade intelectual.</li>
-            <li>A compra de um e-book concede a você uma licença de uso pessoal e não transferível. Você não pode reproduzir, distribuir, modificar, vender ou explorar comercialmente o conteúdo sem a permissão expressa dos detentores dos direitos autorais.</li>
-            <li>O logo, design, textos e todo o conteúdo do site BookFY são de propriedade exclusiva da BookFY ou de seus licenciadores.</li>
-        </ul>
+        <section class="content-section">
+            <h2>6. Propriedade Intelectual</h2>
+            <p>Todo o conteúdo presente no site da BookFY, incluindo textos, gráficos, logotipos, imagens e software, é propriedade da BookFY ou de seus licenciadores e é protegido por leis de direitos autorais e outras leis de propriedade intelectual.</p>
+        </section>
 
-        <h2>6. Conduta do Usuário</h2>
-        <p>Você concorda em não:</p>
-        <ul>
-            <li>Utilizar o site para qualquer finalidade ilegal ou não autorizada.</li>
-            <li>Violar quaisquer leis locais, estaduais, nacionais ou internacionais.</li>
-            <li>Interferir ou interromper a segurança do site ou de seus serviços.</li>
-            <li>Tentar obter acesso não autorizado a outras contas, sistemas de computador ou redes conectadas ao site.</li>
-        </ul>
+        <section class="content-section">
+            <h2>7. Limitação de Responsabilidade</h2>
+            <p>A BookFY não será responsável por quaisquer danos diretos, indiretos, incidentais, consequenciais ou punitivos decorrentes do uso ou da incapacidade de usar o site ou os produtos adquiridos através dele.</p>
+        </section>
 
-        <h2>7. Isenção de Garantias e Limitação de Responsabilidade</h2>
-        <ul>
-            <li>A BookFY é fornecida "como está", sem garantias de qualquer tipo, expressas ou implícitas.</li>
-            <li>Não garantimos que o site será ininterrupto, livre de erros ou seguro.</li>
-            <li>Em nenhuma circunstância a BookFY será responsável por quaisquer danos diretos, indiretos, incidentais, especiais ou consequenciais resultantes do uso ou da incapacidade de usar o site ou os e-books.</li>
-        </ul>
+        <section class="content-section">
+            <h2>8. Rescisão</h2>
+            <p>Reservamo-nos o direito de rescindir ou suspender seu acesso ao site a qualquer momento, sem aviso prévio, por qualquer violação destes Termos.</p>
+        </section>
 
-        <h2>8. Links para Terceiros</h2>
-        <p>Nosso site pode conter links para sites de terceiros. Não somos responsáveis pelo conteúdo ou pelas práticas de privacidade desses sites. Recomendamos que você revise as políticas de privacidade e os termos de uso de qualquer site de terceiros que visitar.</p>
+        <section class="content-section">
+            <h2>9. Lei Aplicável</h2>
+            <p>Estes Termos e Condições serão regidos e interpretados de acordo com as leis do Brasil.</p>
+        </section>
 
-        <h2>9. Alterações nos Termos</h2>
-        <p>A BookFY reserva-se o direito de modificar estes Termos e Condições a qualquer momento. As alterações entrarão em vigor imediatamente após a publicação no site. Seu uso continuado do site após a publicação de quaisquer alterações constitui sua aceitação dessas alterações.</p>
-
-        <h2>10. Lei Aplicável e Foro</h2>
-        <p>Estes Termos e Condições serão regidos e interpretados de acordo com as leis do Brasil. Qualquer disputa decorrente ou relacionada a estes termos será submetida ao foro da comarca de [Sua Cidade/Estado, Brasil], com renúncia expressa a qualquer outro, por mais privilegiado que seja.</p>
-
-        <h2>11. Contato</h2>
-        <p>Se você tiver alguma dúvida sobre estes Termos e Condições, entre em contato conosco através do nosso número de WhatsApp disponível na loja.</p>
+        <section class="content-section">
+            <h2>10. Contato</h2>
+            <p>Para quaisquer dúvidas sobre estes Termos e Condições, entre em contato conosco através do nosso formulário de contato ou email.</p>
+        </section>
     </main>
 
     <footer class="footer">
@@ -248,5 +384,39 @@
             <a href="termos-condicoes.html">Termos e Condições</a>
         </div>
     </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCCTmhjYPplbBUg3ZnBNLMa_qsCnZu_8JU",
+            authDomain: "extrabookfy.firebaseapp.com",
+            databaseURL: "https://extrabookfy-default-rtdb.firebaseio.com",
+            projectId: "extrabookfy",
+            storageBucket: "extrabookfy.firebasestorage.app",
+            messagingSenderId: "887074490735",
+            appId: "1:887074490735:web:547c3e06dff2f8a233409a"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            atualizarContadorCarrinho();
+        });
+
+        async function atualizarContadorCarrinho() {
+            try {
+                const snapshot = await database.ref('carrinho').once('value');
+                const currentCarrinho = snapshot.val() || {};
+                
+                const totalItens = Object.values(currentCarrinho).reduce((total, item) => total + item.quantidade, 0);
+                document.getElementById('cartCount').textContent = totalItens;
+            } catch (error) {
+                console.error('Erro ao atualizar contador:', error);
+            }
+        }
+    </script>
 </body>
 </html>

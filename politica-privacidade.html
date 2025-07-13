@@ -20,27 +20,141 @@
             line-height: 1.6;
         }
 
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
         .header {
             background: #1a365d;
-            color: white;
-            padding: 1rem 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            animation: slideInRight 0.8s ease-out;
         }
 
         .nav {
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            padding: 0 1rem;
+            padding: 1rem 2rem;
         }
 
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            text-decoration: none;
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-img {
+            max-height: 60px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
             color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #a0aec0;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: #2b6cb0;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cart-icon {
+            position: relative;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.75rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .cart-icon:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #e53e3e;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            animation: pulse 2s infinite;
         }
 
         .container {
@@ -48,74 +162,59 @@
             margin: 2rem auto;
             padding: 2rem;
             background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: fadeInUp 0.8s ease-out;
         }
 
-        h1 {
+        .page-title {
             font-size: 2.5rem;
+            font-weight: 700;
             color: #1a365d;
-            margin-bottom: 1.5rem;
             text-align: center;
+            margin-bottom: 2rem;
         }
 
-        h2 {
+        .content-section {
+            margin-bottom: 2rem;
+        }
+
+        .content-section h2 {
             font-size: 1.8rem;
-            color: #2c5282;
-            margin-top: 2rem;
+            color: #1a365d;
             margin-bottom: 1rem;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 2px solid #e2e8f0;
             padding-bottom: 0.5rem;
         }
 
-        h3 {
+        .content-section h3 {
             font-size: 1.4rem;
-            color: #4a5568;
+            color: #2b6cb0;
             margin-top: 1.5rem;
             margin-bottom: 0.8rem;
         }
 
-        p {
+        .content-section p {
             margin-bottom: 1rem;
             color: #4a5568;
         }
 
-        ul {
+        .content-section ul {
+            list-style: disc;
+            margin-left: 1.5rem;
             margin-bottom: 1rem;
-            padding-left: 1.5rem;
+            color: #4a5568;
         }
 
-        li {
+        .content-section ul li {
             margin-bottom: 0.5rem;
-            color: #4a5568;
-        }
-
-        strong {
-            color: #1a365d;
-        }
-
-        .back-btn {
-            background: transparent;
-            color: #1a365d;
-            border: 2px solid #1a365d;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-bottom: 2rem;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .back-btn:hover {
-            background: #1a365d;
-            color: white;
         }
 
         .footer {
             background: #2d3748;
             color: white;
             text-align: center;
-            padding: 2rem 1rem;
+            padding: 3rem 2rem;
             margin-top: 4rem;
         }
 
@@ -139,33 +238,55 @@
             color: #a0aec0;
         }
 
+        .footer p {
+            opacity: 0.8;
+        }
+
         @media (max-width: 768px) {
+            .nav {
+                padding: 1rem;
+            }
+            .logo-img {
+                max-height: 50px;
+            }
+            .logo-text {
+                font-size: 1.5rem;
+            }
+            .cart-icon {
+                padding: 0.6rem;
+            }
+            .cart-count {
+                width: 20px;
+                height: 20px;
+                font-size: 0.7rem;
+            }
+
             .container {
                 padding: 1.5rem;
                 margin: 1rem auto;
             }
-            h1 {
+            .page-title {
                 font-size: 2rem;
+                margin-bottom: 1.5rem;
             }
-            h2 {
+            .content-section h2 {
                 font-size: 1.5rem;
+                margin-bottom: 0.8rem;
             }
-            h3 {
+            .content-section h3 {
                 font-size: 1.2rem;
+                margin-top: 1rem;
+                margin-bottom: 0.6rem;
             }
-            p, li {
+            .content-section p, .content-section ul li {
                 font-size: 0.95rem;
             }
-            .back-btn {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.9rem;
-            }
             .footer {
-                padding: 1.5rem 1rem;
+                padding: 2rem 1rem;
             }
             .footer-links {
                 gap: 1rem;
-                font-size: 0.85rem;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -173,66 +294,81 @@
 <body>
     <header class="header">
         <nav class="nav">
-            <a href="index.html" class="logo">📚 BookFY</a>
+            <div class="logo-container">
+                <img src="https://i.imgur.com/5wDerGV.png" alt="BookFY" class="logo-img">
+                <a href="index.html" class="logo-text">BookFY</a>
+            </div>
+            <div class="nav-links">
+                <a href="carrinho.html">
+                    <div class="cart-icon">
+                        🛒
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </a>
+            </div>
         </nav>
     </header>
 
     <main class="container">
-        <a href="index.html" class="back-btn">← Voltar para a Loja</a>
-        <h1>Política de Privacidade da BookFY</h1>
-        <p>Última atualização: 13 de Julho de 2025</p>
+        <h1 class="page-title">Política de Privacidade</h1>
 
-        <p>A sua privacidade é de extrema importância para a BookFY. Esta Política de Privacidade descreve como coletamos, usamos, armazenamos e protegemos as suas informações pessoais ao utilizar nossa loja de e-books.</p>
+        <section class="content-section">
+            <h2>1. Introdução</h2>
+            <p>A BookFY valoriza a sua privacidade e está comprometida em proteger os seus dados pessoais. Esta Política de Privacidade descreve como coletamos, usamos, armazenamos e compartilhamos as informações que você nos fornece ao utilizar nosso site e serviços.</p>
+        </section>
 
-        <h2>1. Informações que Coletamos</h2>
-        <p>Coletamos informações para fornecer e melhorar nossos serviços. As categorias de informações que podemos coletar incluem:</p>
-        <ul>
-            <li><strong>Informações de Cadastro:</strong> Nome completo, endereço de e-mail, telefone, endereço de entrega (CEP, cidade, endereço, número, complemento) quando você realiza uma compra.</li>
-            <li><strong>Informações de Transação:</strong> Detalhes dos e-books comprados, valor total do pedido, data e hora da compra. Não armazenamos dados de cartão de crédito ou outras informações financeiras sensíveis diretamente em nossos servidores.</li>
-            <li><strong>Dados de Uso:</strong> Informações sobre como você interage com nosso site, como páginas visitadas, produtos visualizados, tempo de permanência, cliques e outras ações.</li>
-            <li><strong>Dados Técnicos:</strong> Endereço IP, tipo de navegador, sistema operacional, provedor de serviços de internet, e outros identificadores de dispositivo.</li>
-        </ul>
+        <section class="content-section">
+            <h2>2. Informações Coletadas</h2>
+            <p>Coletamos informações para fornecer e melhorar nossos serviços. As categorias de dados que podemos coletar incluem:</p>
+            <ul>
+                <li><strong>Informações de Identificação:</strong> Nome, endereço de e-mail, endereço de entrega, número de telefone.</li>
+                <li><strong>Informações de Pagamento:</strong> Dados de cartão de crédito/débito (processados por parceiros seguros, não armazenamos diretamente).</li>
+                <li><strong>Dados de Uso:</strong> Informações sobre como você interage com nosso site, produtos visualizados, histórico de compras.</li>
+                <li><strong>Dados Técnicos:</strong> Endereço IP, tipo de navegador, sistema operacional, dados de localização (se permitido).</li>
+            </ul>
+        </section>
 
-        <h2>2. Como Usamos Suas Informações</h2>
-        <p>Utilizamos as informações coletadas para diversas finalidades, incluindo:</p>
-        <ul>
-            <li>Processar e gerenciar seus pedidos de e-books.</li>
-            <li>Comunicar-nos com você sobre suas compras, atualizações de pedidos e ofertas promocionais (com seu consentimento).</li>
-            <li>Melhorar a experiência do usuário em nosso site, personalizando o conteúdo e as recomendações de e-books.</li>
-            <li>Analisar tendências de uso e comportamento para otimizar nossos serviços e produtos.</li>
-            <li>Detectar, prevenir e investigar atividades fraudulentas ou ilegais.</li>
-            <li>Cumprir obrigações legais e regulatórias.</li>
-        </ul>
+        <section class="content-section">
+            <h2>3. Como Usamos Suas Informações</h2>
+            <p>Suas informações são utilizadas para:</p>
+            <ul>
+                <li>Processar e gerenciar seus pedidos e pagamentos.</li>
+                <li>Fornecer suporte ao cliente e responder às suas perguntas.</li>
+                <li>Personalizar sua experiência de compra e recomendar produtos.</li>
+                <li>Melhorar nosso site, produtos e serviços.</li>
+                <li>Enviar comunicações de marketing (com seu consentimento).</li>
+                <li>Cumprir obrigações legais e regulatórias.</li>
+            </ul>
+        </section>
 
-        <h2>3. Compartilhamento de Informações</h2>
-        <p>A BookFY não vende, aluga ou compartilha suas informações pessoais com terceiros, exceto nas seguintes circunstâncias:</p>
-        <ul>
-            <li><strong>Provedores de Serviço:</strong> Podemos compartilhar informações com empresas que nos auxiliam na operação do site, processamento de pagamentos, entrega de e-books (se aplicável, para fins de notificação), análise de dados e marketing. Esses provedores são obrigados a proteger suas informações e usá-las apenas para os fins especificados.</li>
-            <li><strong>Obrigações Legais:</strong> Podemos divulgar suas informações se exigido por lei, ordem judicial ou para proteger nossos direitos, propriedade ou segurança, ou a segurança de outros.</li>
-            <li><strong>Transferências de Negócios:</strong> Em caso de fusão, aquisição ou venda de ativos, suas informações podem ser transferidas como parte da transação.</li>
-        </ul>
+        <section class="content-section">
+            <h2>4. Compartilhamento de Informações</h2>
+            <p>Não vendemos ou alugamos suas informações pessoais a terceiros. Podemos compartilhar seus dados com:</p>
+            <ul>
+                <li><strong>Provedores de Serviço:</strong> Empresas que nos auxiliam em operações como processamento de pagamentos, entrega, marketing e análise de dados.</li>
+                <li><strong>Autoridades Legais:</strong> Quando exigido por lei ou para proteger nossos direitos.</li>
+            </ul>
+        </section>
 
-        <h2>4. Segurança dos Dados</h2>
-        <p>Empregamos medidas de segurança técnicas e organizacionais para proteger suas informações pessoais contra acesso não autorizado, alteração, divulgação ou destruição. No entanto, nenhum método de transmissão pela internet ou armazenamento eletrônico é 100% seguro. Portanto, não podemos garantir segurança absoluta.</p>
+        <section class="content-section">
+            <h2>5. Segurança dos Dados</h2>
+            <p>Implementamos medidas de segurança técnicas e organizacionais para proteger suas informações contra acesso não autorizado, alteração, divulgação ou destruição. No entanto, nenhum sistema é 100% seguro.</p>
+        </section>
 
-        <h2>5. Seus Direitos</h2>
-        <p>Você tem o direito de:</p>
-        <ul>
-            <li><strong>Acessar:</strong> Solicitar acesso às suas informações pessoais que mantemos.</li>
-            <li><strong>Corrigir:</strong> Solicitar a correção de informações imprecisas ou incompletas.</li>
-            <li><strong>Excluir:</strong> Solicitar a exclusão de suas informações pessoais, sujeito a certas exceções legais.</li>
-            <li><strong>Opor-se:</strong> Opor-se ao processamento de suas informações para fins de marketing direto.</li>
-        </ul>
-        <p>Para exercer qualquer um desses direitos, entre em contato conosco através dos canais indicados em nosso site.</p>
+        <section class="content-section">
+            <h2>6. Seus Direitos</h2>
+            <p>Você tem o direito de acessar, corrigir, atualizar ou solicitar a exclusão de suas informações pessoais. Para exercer esses direitos, entre em contato conosco através dos canais de suporte.</p>
+        </section>
 
-        <h2>6. Cookies e Tecnologias Semelhantes</h2>
-        <p>Utilizamos cookies e outras tecnologias de rastreamento para coletar informações sobre sua navegação e melhorar sua experiência. Você pode configurar seu navegador para recusar cookies, mas isso pode afetar a funcionalidade do site.</p>
+        <section class="content-section">
+            <h2>7. Alterações a Esta Política</h2>
+            <p>Podemos atualizar esta Política de Privacidade periodicamente. Notificaremos você sobre quaisquer alterações significativas publicando a nova política em nosso site.</p>
+        </section>
 
-        <h2>7. Alterações a Esta Política de Privacidade</h2>
-        <p>Podemos atualizar esta Política de Privacidade periodicamente para refletir mudanças em nossas práticas ou requisitos legais. Notificaremos você sobre quaisquer alterações significativas publicando a nova política em nosso site. Recomendamos que você revise esta página regularmente.</p>
-
-        <h2>8. Contato</h2>
-        <p>Se tiver alguma dúvida ou preocupação sobre esta Política de Privacidade ou sobre nossas práticas de privacidade, entre em contato conosco através do nosso número de WhatsApp disponível na loja.</p>
+        <section class="content-section">
+            <h2>8. Contato</h2>
+            <p>Se tiver dúvidas sobre esta Política de Privacidade, entre em contato conosco através do nosso formulário de contato ou email.</p>
+        </section>
     </main>
 
     <footer class="footer">
@@ -242,5 +378,39 @@
             <a href="termos-condicoes.html">Termos e Condições</a>
         </div>
     </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCCTmhjYPplbBUg3ZnBNLMa_qsCnZu_8JU",
+            authDomain: "extrabookfy.firebaseapp.com",
+            databaseURL: "https://extrabookfy-default-rtdb.firebaseio.com",
+            projectId: "extrabookfy",
+            storageBucket: "extrabookfy.firebasestorage.app",
+            messagingSenderId: "887074490735",
+            appId: "1:887074490735:web:547c3e06dff2f8a233409a"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            atualizarContadorCarrinho();
+        });
+
+        async function atualizarContadorCarrinho() {
+            try {
+                const snapshot = await database.ref('carrinho').once('value');
+                const currentCarrinho = snapshot.val() || {};
+                
+                const totalItens = Object.values(currentCarrinho).reduce((total, item) => total + item.quantidade, 0);
+                document.getElementById('cartCount').textContent = totalItens;
+            } catch (error) {
+                console.error('Erro ao atualizar contador:', error);
+            }
+        }
+    </script>
 </body>
 </html>

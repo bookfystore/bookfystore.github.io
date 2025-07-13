@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Erro - BookFY</title>
+    <title>Erro no Pedido - BookFY</title>
     <link rel="icon" href="https://i.imgur.com/5wDerGV.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -15,25 +15,12 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
-            color: #b71c1c;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #2d3748;
             line-height: 1.6;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .container {
-            background: white;
-            border-radius: 20px;
-            padding: 3rem;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-            max-width: 600px;
-            width: 90%;
-            animation: fadeInUp 0.8s ease-out;
         }
 
         @keyframes fadeInUp {
@@ -47,84 +34,333 @@
             }
         }
 
-        .icon {
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .header {
+            background: #1a365d;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            animation: slideInRight 0.8s ease-out;
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-img {
+            max-height: 60px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #a0aec0;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: #2b6cb0;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cart-icon {
+            position: relative;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.75rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .cart-icon:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #e53e3e;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+
+        main {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .error-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .error-icon {
             font-size: 5rem;
-            color: #dc3545;
+            color: #e53e3e;
             margin-bottom: 1.5rem;
-            animation: shake 0.8s cubic-bezier(.36,.07,.19,.97) both;
         }
 
-        @keyframes shake {
-            10%, 90% {
-                transform: translate3d(-1px, 0, 0);
-            }
-            20%, 80% {
-                transform: translate3d(2px, 0, 0);
-            }
-            30%, 50%, 70% {
-                transform: translate3d(-4px, 0, 0);
-            }
-            40%, 60% {
-                transform: translate3d(4px, 0, 0);
-            }
-        }
-
-        h1 {
+        .error-title {
             font-size: 2.5rem;
-            color: #b71c1c;
+            font-weight: 700;
+            color: #1a365d;
             margin-bottom: 1rem;
         }
 
-        p {
+        .error-message {
             font-size: 1.1rem;
-            color: #333;
+            color: #4a5568;
             margin-bottom: 2rem;
         }
 
         .btn-home {
-            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
             padding: 1rem 2rem;
             border-radius: 50px;
-            text-decoration: none;
+            cursor: pointer;
             font-size: 1.1rem;
             font-weight: 600;
+            text-decoration: none;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
 
         .btn-home:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(220, 53, 69, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-top: auto;
+        }
+
+        .footer-links {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #a0aec0;
+        }
+
+        .footer p {
+            opacity: 0.8;
         }
 
         @media (max-width: 768px) {
-            .container {
+            .nav {
+                padding: 1rem;
+            }
+            .logo-img {
+                max-height: 50px;
+            }
+            .logo-text {
+                font-size: 1.5rem;
+            }
+            .cart-icon {
+                padding: 0.6rem;
+            }
+            .cart-count {
+                width: 20px;
+                height: 20px;
+                font-size: 0.7rem;
+            }
+
+            .error-container {
                 padding: 2rem;
             }
-            h1 {
+            .error-icon {
+                font-size: 4rem;
+            }
+            .error-title {
                 font-size: 2rem;
             }
-            p {
+            .error-message {
                 font-size: 1rem;
-            }
-            .icon {
-                font-size: 4rem;
             }
             .btn-home {
                 padding: 0.8rem 1.5rem;
                 font-size: 1rem;
             }
+            .footer {
+                padding: 2rem 1rem;
+            }
+            .footer-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="icon">⚠️</div>
-        <h1>Ocorreu um Erro!</h1>
-        <p>Lamentamos, mas houve um problema ao processar seu pedido. Por favor, tente novamente ou entre em contato conosco.</p>
-        <a href="index.html" class="btn-home">Voltar para a Loja</a>
-    </div>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo-container">
+                <img src="https://i.imgur.com/5wDerGV.png" alt="BookFY" class="logo-img">
+                <a href="index.html" class="logo-text">BookFY</a>
+            </div>
+            <div class="nav-links">
+                <a href="carrinho.html">
+                    <div class="cart-icon">
+                        🛒
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="error-container">
+            <div class="error-icon">❌</div>
+            <h1 class="error-title">Ops! Algo deu errado.</h1>
+            <p class="error-message">Não foi possível processar seu pedido. Por favor, verifique os dados e tente novamente.</p>
+            <a href="checkout.html" class="btn-home">Tentar Novamente</a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>© 2024 BookFY. Todos os direitos reservados.</p>
+        <div class="footer-links">
+            <a href="politica-privacidade.html">Política de Privacidade</a>
+            <a href="termos-condicoes.html">Termos e Condições</a>
+        </div>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCCTmhjYPplbBUg3ZnBNLMa_qsCnZu_8JU",
+            authDomain: "extrabookfy.firebaseapp.com",
+            databaseURL: "https://extrabookfy-default-rtdb.firebaseio.com",
+            projectId: "extrabookfy",
+            storageBucket: "extrabookfy.firebasestorage.app",
+            messagingSenderId: "887074490735",
+            appId: "1:887074490735:web:547c3e06dff2f8a233409a"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            atualizarContadorCarrinho();
+        });
+
+        async function atualizarContadorCarrinho() {
+            try {
+                const snapshot = await database.ref('carrinho').once('value');
+                const currentCarrinho = snapshot.val() || {};
+                
+                const totalItens = Object.values(currentCarrinho).reduce((total, item) => total + item.quantidade, 0);
+                document.getElementById('cartCount').textContent = totalItens;
+            } catch (error) {
+                console.error('Erro ao atualizar contador:', error);
+            }
+        }
+    </script>
 </body>
 </html>
