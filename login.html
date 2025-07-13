@@ -165,6 +165,17 @@
             <button type="submit" class="login-btn" id="loginBtn">Entrar</button>
         </form>
 
+        <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-top: 1rem; text-align: center;">
+            <h4 style="color: #1a365d; margin-bottom: 0.5rem;">Credenciais de Acesso</h4>
+            <p style="color: #666; font-size: 0.9rem;">
+                <strong>E-mail:</strong> alirioonetoo@gmail.com<br>
+                <strong>Senha:</strong> 23532005
+            </p>
+            <p style="color: #666; font-size: 0.8rem; margin-top: 0.5rem;">
+                Se for o primeiro acesso, o usuário será criado automaticamente.
+            </p>
+        </div>
+
         <div class="back-link">
             <a href="../index.html">← Voltar à loja</a>
         </div>
@@ -222,29 +233,46 @@
             loginBtn.disabled = true;
 
             try {
+                // Tentar fazer login primeiro
                 await auth.signInWithEmailAndPassword(email, password);
                 // Redirecionamento será feito pelo onAuthStateChanged
             } catch (error) {
                 console.error('Erro no login:', error);
                 
-                let mensagemErro = 'Erro ao fazer login. Verifique suas credenciais.';
-                
-                switch (error.code) {
-                    case 'auth/user-not-found':
-                        mensagemErro = 'Usuário não encontrado.';
-                        break;
-                    case 'auth/wrong-password':
-                        mensagemErro = 'Senha incorreta.';
-                        break;
-                    case 'auth/invalid-email':
-                        mensagemErro = 'E-mail inválido.';
-                        break;
-                    case 'auth/too-many-requests':
-                        mensagemErro = 'Muitas tentativas. Tente novamente mais tarde.';
-                        break;
+                // Se o usuário não existe, criar automaticamente
+                if (error.code === 'auth/user-not-found') {
+                    try {
+                        // Criar usuário admin
+                        await auth.createUserWithEmailAndPassword(email, password);
+                        console.log('Usuário admin criado com sucesso!');
+                        // Redirecionamento será feito pelo onAuthStateChanged
+                    } catch (createError) {
+                        console.error('Erro ao criar usuário:', createError);
+                        errorDiv.textContent = 'Erro ao criar usuário admin.';
+                    }
+                } else {
+                    let mensagemErro = 'Erro ao fazer login. Verifique suas credenciais.';
+                    
+                    switch (error.code) {
+                        case 'auth/wrong-password':
+                            mensagemErro = 'Senha incorreta.';
+                            break;
+                        case 'auth/invalid-email':
+                            mensagemErro = 'E-mail inválido.';
+                            break;
+                        case 'auth/too-many-requests':
+                            mensagemErro = 'Muitas tentativas. Tente novamente mais tarde.';
+                            break;
+                        case 'auth/weak-password':
+                            mensagemErro = 'Senha muito fraca. Use pelo menos 6 caracteres.';
+                            break;
+                        case 'auth/email-already-in-use':
+                            mensagemErro = 'E-mail já está em uso.';
+                            break;
+                    }
+                    
+                    errorDiv.textContent = mensagemErro;
                 }
-                
-                errorDiv.textContent = mensagemErro;
             } finally {
                 loadingDiv.style.display = 'none';
                 loginBtn.disabled = false;
