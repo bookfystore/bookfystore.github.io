@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrinho - Bookify</title>
+    <title>Carrinho - BookFY</title>
     <link rel="icon" href="https://i.imgur.com/5wDerGV.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -20,7 +20,6 @@
             line-height: 1.6;
         }
 
-        /* Animações */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -54,9 +53,8 @@
             }
         }
 
-        /* Header */
         .header {
-            background: rgba(255, 255, 255, 0.95);
+            background: #1a365d;
             backdrop-filter: blur(10px);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             position: sticky;
@@ -68,7 +66,7 @@
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             padding: 1rem 2rem;
         }
@@ -92,29 +90,10 @@
         .logo-text {
             font-size: 1.8rem;
             font-weight: 700;
-            color: #2b6cb0;
+            color: white;
             text-decoration: none;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: #4a5568;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: #2b6cb0;
-            transform: translateY(-2px);
-        }
-
-        /* Container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -411,7 +390,6 @@
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
         }
 
-        /* WhatsApp Float Button */
         .whatsapp-float {
             position: fixed;
             width: 60px;
@@ -437,7 +415,6 @@
             box-shadow: 0 12px 35px rgba(37, 211, 102, 0.6);
         }
 
-        /* Notification */
         .notification {
             position: fixed;
             top: 100px;
@@ -461,7 +438,6 @@
             box-shadow: 0 8px 25px rgba(229, 62, 62, 0.4);
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .cart-container {
                 grid-template-columns: 1fr;
@@ -496,6 +472,75 @@
             .page-title {
                 font-size: 2.2rem;
             }
+            .logo-img {
+                max-height: 50px;
+            }
+            .logo-text {
+                font-size: 1.5rem;
+            }
+            .back-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            .cart-items {
+                padding: 1.5rem;
+            }
+            .cart-item {
+                padding: 1.5rem 0;
+            }
+            .item-image {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
+            .item-title {
+                font-size: 1.1rem;
+            }
+            .item-price {
+                font-size: 1rem;
+            }
+            .quantity-controls {
+                padding: 0.3rem;
+            }
+            .quantity-btn {
+                width: 30px;
+                height: 30px;
+                font-size: 1rem;
+            }
+            .quantity-display {
+                min-width: 30px;
+                font-size: 0.9rem;
+            }
+            .remove-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.8rem;
+            }
+            .cart-summary {
+                padding: 1.5rem;
+            }
+            .summary-title {
+                font-size: 1.5rem;
+            }
+            .summary-line {
+                font-size: 0.95rem;
+            }
+            .summary-total {
+                font-size: 1.2rem;
+            }
+            .whatsapp-btn {
+                padding: 1rem 1.5rem;
+                font-size: 1.1rem;
+            }
+            .empty-cart h2 {
+                font-size: 1.8rem;
+            }
+            .empty-cart p {
+                font-size: 1rem;
+            }
+            .continue-shopping {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -503,12 +548,8 @@
     <header class="header">
         <nav class="nav">
             <div class="logo-container">
-                <img src="https://i.imgur.com/5wDerGV.png" alt="Bookify" class="logo-img">
-                <a href="index.html" class="logo-text">Bookify</a>
-            </div>
-            <div class="nav-links">
-                <a href="index.html">Início</a>
-                <a href="carrinho.html">Carrinho</a>
+                <img src="https://i.imgur.com/5wDerGV.png" alt="BookFY" class="logo-img">
+                <a href="index.html" class="logo-text">BookFY</a>
             </div>
         </nav>
     </header>
@@ -520,22 +561,18 @@
         <div id="cartContainer"></div>
     </main>
 
-    <!-- WhatsApp Float Button -->
-    <div class="whatsapp-float" onclick="window.open('https://wa.me/5597981027196?text=Olá! Gostaria de saber mais sobre os livros da Bookify! 📚', '_blank')">
+    <div class="whatsapp-float" onclick="window.open('https://wa.me/5597981027196?text=Olá! Gostaria de saber mais sobre os livros da BookFY! 📚', '_blank')">
         📱
     </div>
 
-    <!-- Notification -->
     <div id="notification" class="notification">
         <span id="notificationText"></span>
     </div>
 
-    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
     <script>
-        // Configuração do Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyCCTmhjYPplbBUg3ZnBNLMa_qsCnZu_8JU",
             authDomain: "extrabookfy.firebaseapp.com",
@@ -551,7 +588,6 @@
 
         let carrinho = {};
 
-        // Carregar carrinho do Firebase
         async function carregarCarrinho() {
             try {
                 const snapshot = await database.ref('carrinho').once('value');
@@ -563,7 +599,6 @@
             }
         }
 
-        // Exibir carrinho na tela
         function exibirCarrinho() {
             const container = document.getElementById('cartContainer');
             const itensCarrinho = Object.values(carrinho);
@@ -607,7 +642,6 @@
                 `;
             });
 
-            // Gerar mensagem do WhatsApp
             const mensagemWhatsApp = gerarMensagemWhatsApp(itensCarrinho, subtotal);
 
             container.innerHTML = `
@@ -621,10 +655,6 @@
                             <span>Subtotal:</span>
                             <span>R$ ${subtotal.toFixed(2)}</span>
                         </div>
-                        <div class="summary-line">
-                            <span>Frete:</span>
-                            <span style="color: #48bb78; font-weight: 600;">✅ Grátis</span>
-                        </div>
                         <div class="summary-line summary-total">
                             <span>Total:</span>
                             <span>R$ ${subtotal.toFixed(2)}</span>
@@ -637,7 +667,6 @@
             `;
         }
 
-        // Gerar mensagem para WhatsApp
         function gerarMensagemWhatsApp(itens, total) {
             let mensagem = "Olá! Quero comprar:\n\n";
             
@@ -654,17 +683,14 @@
             return mensagem;
         }
 
-        // Finalizar pedido via WhatsApp
         function finalizarPedido(mensagem) {
             const numeroWhatsApp = '5597981027196';
             const url = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
             window.open(url, '_blank');
             
-            // Salvar pedido no Firebase (opcional para estatísticas)
             salvarPedido();
         }
 
-        // Salvar pedido no Firebase
         async function salvarPedido() {
             try {
                 const pedidoId = Date.now().toString();
@@ -684,10 +710,8 @@
 
                 await database.ref(`pedidos/${pedidoId}`).set(pedido);
                 
-                // Atualizar estatísticas
                 await database.ref('adminStats/vendas').transaction((current) => (current || 0) + 1);
                 
-                // Limpar carrinho após alguns segundos
                 setTimeout(async () => {
                     await database.ref('carrinho').remove();
                     mostrarNotificacao('✅ Pedido enviado! Carrinho limpo.');
@@ -701,7 +725,6 @@
             }
         }
 
-        // Alterar quantidade de um item
         async function alterarQuantidade(itemId, delta) {
             if (!carrinho[itemId]) return;
 
@@ -724,7 +747,6 @@
             }
         }
 
-        // Remover item do carrinho
         async function removerItem(itemId) {
             if (!carrinho[itemId]) return;
 
@@ -741,7 +763,6 @@
             }
         }
 
-        // Mostrar notificação
         function mostrarNotificacao(texto, tipo = 'success') {
             const notification = document.getElementById('notification');
             const notificationText = document.getElementById('notificationText');
@@ -755,7 +776,6 @@
             }, 3000);
         }
 
-        // Inicializar página
         document.addEventListener('DOMContentLoaded', () => {
             carregarCarrinho();
         });

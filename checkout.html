@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout - Bookify</title>
+    <title>Checkout - BookFY</title>
     <style>
         * {
             margin: 0;
@@ -18,7 +18,7 @@
         }
 
         .header {
-            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            background: #1a365d;
             color: white;
             padding: 1rem 0;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -28,7 +28,7 @@
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             padding: 0 1rem;
         }
@@ -234,13 +234,32 @@
             .form-row {
                 grid-template-columns: 1fr;
             }
+            .page-title {
+                font-size: 2rem;
+            }
+            .form-section {
+                margin-bottom: 1.5rem;
+            }
+            .section-title {
+                font-size: 1.2rem;
+            }
+            .order-summary {
+                padding: 1.5rem;
+            }
+            .summary-title {
+                font-size: 1.3rem;
+            }
+            .whatsapp-btn {
+                font-size: 1rem;
+                padding: 0.8rem 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
     <header class="header">
         <nav class="nav">
-            <a href="index.html" class="logo">📚 Bookify</a>
+            <a href="index.html" class="logo">📚 BookFY</a>
         </nav>
     </header>
 
@@ -322,12 +341,10 @@
         </div>
     </main>
 
-    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
     <script>
-        // Configuração do Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyCCTmhjYPplbBUg3ZnBNLMa_qsCnZu_8JU",
             authDomain: "extrabookfy.firebaseapp.com",
@@ -344,7 +361,6 @@
         let carrinho = {};
         let total = 0;
 
-        // Carregar dados do checkout
         async function carregarCheckout() {
             try {
                 const snapshot = await database.ref('carrinho').once('value');
@@ -365,7 +381,6 @@
             }
         }
 
-        // Exibir resumo do pedido
         function exibirResumo() {
             const summaryContainer = document.getElementById('summaryItems');
             const itensCarrinho = Object.values(carrinho);
@@ -393,12 +408,10 @@
             document.getElementById('totalPrice').textContent = `R$ ${total.toFixed(2)}`;
         }
 
-        // Validar formulário
         function validarFormulario() {
             let isValid = true;
             const campos = ['nome', 'email', 'telefone', 'cep', 'cidade', 'endereco', 'numero'];
             
-            // Limpar erros anteriores
             campos.forEach(campo => {
                 const input = document.getElementById(campo);
                 const errorDiv = document.getElementById(campo + 'Error');
@@ -406,7 +419,6 @@
                 errorDiv.textContent = '';
             });
 
-            // Validar cada campo
             campos.forEach(campo => {
                 const input = document.getElementById(campo);
                 const errorDiv = document.getElementById(campo + 'Error');
@@ -418,7 +430,6 @@
                 }
             });
 
-            // Validar email
             const email = document.getElementById('email');
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (email.value && !emailRegex.test(email.value)) {
@@ -427,19 +438,17 @@
                 isValid = false;
             }
 
-            // Validar telefone
             const telefone = document.getElementById('telefone');
-            const telefoneRegex = /^$$\d{2}$$\s\d{4,5}-\d{4}$/;
-            if (telefone.value && telefone.value.length < 10) {
+            const telefoneRegex = /^$$\d{2}$$\s\d{4,5}-\d{4}$/; 
+            if (telefone.value && !telefoneRegex.test(telefone.value)) {
                 telefone.classList.add('error');
-                document.getElementById('telefoneError').textContent = 'Telefone deve ter pelo menos 10 dígitos';
+                document.getElementById('telefoneError').textContent = 'Telefone inválido (Ex: (99) 99999-9999)';
                 isValid = false;
             }
 
             return isValid;
         }
 
-        // Finalizar compra via WhatsApp
         async function finalizarCompra() {
             if (!validarFormulario()) {
                 alert('Por favor, preencha todos os campos obrigatórios corretamente.');
@@ -451,7 +460,6 @@
             btn.innerHTML = '⏳ Processando...';
 
             try {
-                // Coletar dados do formulário
                 const dadosCliente = {
                     nome: document.getElementById('nome').value,
                     email: document.getElementById('email').value,
@@ -465,7 +473,6 @@
                     }
                 };
 
-                // Salvar pedido no Firebase
                 const pedidoId = Date.now().toString();
                 const pedido = {
                     id: pedidoId,
@@ -478,10 +485,8 @@
 
                 await database.ref(`pedidos/${pedidoId}`).set(pedido);
 
-                // Atualizar estatísticas
                 await database.ref('adminStats/vendas').transaction((current) => (current || 0) + 1);
 
-                // Gerar mensagem para WhatsApp
                 const itensCarrinho = Object.values(carrinho);
                 let mensagem = `Olá! Estou interessado no(s) `;
                 
@@ -503,17 +508,14 @@
                 mensagem += `\n${dadosCliente.endereco.cidade} - CEP: ${dadosCliente.endereco.cep}`;
                 mensagem += `\n\nPedido ID: ${pedidoId}`;
 
-                // Limpar carrinho
                 await database.ref('carrinho').remove();
 
-                // Redirecionar para WhatsApp
                 const numeroWhatsApp = '5597981027196';
                 const mensagemCodificada = encodeURIComponent(mensagem);
                 const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${mensagemCodificada}`;
                 
                 window.open(urlWhatsApp, '_blank');
                 
-                // Redirecionar para página de sucesso
                 setTimeout(() => {
                     window.location.href = 'sucesso.html';
                 }, 1000);
@@ -526,7 +528,6 @@
             }
         }
 
-        // Máscara para telefone
         document.getElementById('telefone').addEventListener('input', function(e) {
             let value = e.target.value.replace(/\D/g, '');
             if (value.length >= 11) {
@@ -539,7 +540,6 @@
             e.target.value = value;
         });
 
-        // Máscara para CEP
         document.getElementById('cep').addEventListener('input', function(e) {
             let value = e.target.value.replace(/\D/g, '');
             if (value.length >= 5) {
@@ -548,7 +548,6 @@
             e.target.value = value;
         });
 
-        // Inicializar página
         document.addEventListener('DOMContentLoaded', () => {
             carregarCheckout();
         });

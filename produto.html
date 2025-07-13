@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produto - Bookify</title>
+    <title>Produto - BookFY</title>
     <link rel="icon" href="https://i.imgur.com/5wDerGV.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -20,7 +20,6 @@
             line-height: 1.6;
         }
 
-        /* Animações */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -54,9 +53,8 @@
             }
         }
 
-        /* Header */
         .header {
-            background: rgba(255, 255, 255, 0.95);
+            background: #1a365d;
             backdrop-filter: blur(10px);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             position: sticky;
@@ -92,7 +90,7 @@
         .logo-text {
             font-size: 1.8rem;
             font-weight: 700;
-            color: #2b6cb0;
+            color: white;
             text-decoration: none;
         }
 
@@ -103,14 +101,14 @@
         }
 
         .nav-links a {
-            color: #4a5568;
+            color: white;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
         }
 
         .nav-links a:hover {
-            color: #2b6cb0;
+            color: #a0aec0;
             transform: translateY(-2px);
         }
 
@@ -146,7 +144,6 @@
             font-weight: 600;
         }
 
-        /* Container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -389,7 +386,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* WhatsApp Button */
         .whatsapp-float {
             position: fixed;
             width: 60px;
@@ -415,7 +411,6 @@
             box-shadow: 0 12px 35px rgba(37, 211, 102, 0.6);
         }
 
-        /* Notification */
         .notification {
             position: fixed;
             top: 100px;
@@ -434,7 +429,6 @@
             transform: translateX(0);
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .product-detail {
                 grid-template-columns: 1fr;
@@ -463,6 +457,43 @@
             .container {
                 padding: 1rem;
             }
+            .logo-img {
+                max-height: 50px;
+            }
+            .logo-text {
+                font-size: 1.5rem;
+            }
+            .nav-links {
+                gap: 1rem;
+            }
+            .cart-icon {
+                padding: 0.6rem;
+            }
+            .cart-count {
+                width: 20px;
+                height: 20px;
+                font-size: 0.7rem;
+            }
+            .back-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            .product-description-large {
+                font-size: 1rem;
+            }
+            .quantity-selector {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.8rem;
+            }
+            .quantity-controls {
+                width: 100%;
+                justify-content: center;
+            }
+            .btn-large {
+                padding: 1rem 2rem;
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
@@ -470,11 +501,10 @@
     <header class="header">
         <nav class="nav">
             <div class="logo-container">
-                <img src="https://i.imgur.com/5wDerGV.png" alt="Bookify" class="logo-img">
-                <a href="index.html" class="logo-text">Bookify</a>
+                <img src="https://i.imgur.com/5wDerGV.png" alt="BookFY" class="logo-img">
+                <a href="index.html" class="logo-text">BookFY</a>
             </div>
             <div class="nav-links">
-                <a href="index.html">Início</a>
                 <a href="carrinho.html">
                     <div class="cart-icon">
                         🛒
@@ -492,22 +522,18 @@
         <div id="productDetail" style="display: none;"></div>
     </main>
 
-    <!-- WhatsApp Float Button -->
-    <div class="whatsapp-float" onclick="window.open('https://wa.me/5597981027196?text=Olá! Gostaria de saber mais sobre os livros da Bookify! 📚', '_blank')">
+    <div class="whatsapp-float" onclick="window.open('https://wa.me/5597981027196?text=Olá! Gostaria de saber mais sobre os livros da BookFY! 📚', '_blank')">
         📱
     </div>
 
-    <!-- Notification -->
     <div id="notification" class="notification">
         <span id="notificationText"></span>
     </div>
 
-    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
     <script>
-        // Configuração do Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyCCTmhjYPplbBUg3ZnBNLMa_qsCnZu_8JU",
             authDomain: "extrabookfy.firebaseapp.com",
@@ -524,13 +550,11 @@
         let produto = null;
         let quantidade = 1;
 
-        // Obter ID do produto da URL
         function obterIdProduto() {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get('id');
         }
 
-        // Carregar produto específico
         async function carregarProduto() {
             const produtoId = obterIdProduto();
             
@@ -551,7 +575,6 @@
                 produto.id = produtoId;
                 exibirProduto();
                 
-                // Atualizar estatísticas de cliques
                 database.ref('adminStats/cliques').transaction((current) => (current || 0) + 1);
                 
             } catch (error) {
@@ -560,7 +583,6 @@
             }
         }
 
-        // Exibir produto na tela
         function exibirProduto() {
             const container = document.getElementById('productDetail');
             
@@ -600,13 +622,11 @@
             container.style.display = 'block';
         }
 
-        // Alterar quantidade
         function alterarQuantidade(delta) {
             quantidade = Math.max(1, quantidade + delta);
             document.getElementById('quantityInput').value = quantidade;
         }
 
-        // Validar quantidade
         function validarQuantidade() {
             const input = document.getElementById('quantityInput');
             const valor = parseInt(input.value);
@@ -619,12 +639,10 @@
             }
         }
 
-        // Adicionar ao carrinho
         async function adicionarAoCarrinho() {
             if (!produto) return;
 
             try {
-                // Carregar carrinho atual do Firebase
                 const snapshot = await database.ref('carrinho').once('value');
                 let carrinho = snapshot.val() || {};
 
@@ -637,13 +655,10 @@
                     };
                 }
 
-                // Salvar no Firebase
                 await database.ref('carrinho').set(carrinho);
                 
-                // Atualizar contador do carrinho
                 atualizarContadorCarrinho();
                 
-                // Mostrar notificação
                 mostrarNotificacao(`📚 ${quantidade}x ${produto.nome} adicionado ao carrinho!`);
                 
             } catch (error) {
@@ -652,7 +667,6 @@
             }
         }
 
-        // Mostrar notificação
         function mostrarNotificacao(texto, tipo = 'success') {
             const notification = document.getElementById('notification');
             const notificationText = document.getElementById('notificationText');
@@ -666,7 +680,6 @@
             }, 3000);
         }
 
-        // Atualizar contador do carrinho
         async function atualizarContadorCarrinho() {
             try {
                 const snapshot = await database.ref('carrinho').once('value');
@@ -679,7 +692,6 @@
             }
         }
 
-        // Inicializar página
         document.addEventListener('DOMContentLoaded', () => {
             carregarProduto();
             atualizarContadorCarrinho();

@@ -1,820 +1,812 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bookify - Sua Livraria Online</title>
-    <link rel="icon" href="https://i.imgur.com/5wDerGV.png" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BookFY - Sua Livraria Online</title>
+<link rel="icon" href="https://i.imgur.com/5wDerGV.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: #2d3748;
-            line-height: 1.6;
-        }
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        color: #2d3748;
+        line-height: 1.6;
+    }
 
-        /* Animações */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
         }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* Header */
-        .header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            animation: slideInRight 0.8s ease-out;
-        }
-
-        .nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .logo-img {
-            max-height: 60px;
-            width: auto;
-            transition: transform 0.3s ease;
-        }
-
-        .logo-img:hover {
-            transform: scale(1.05);
-        }
-
-        .logo-text {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #2b6cb0;
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: #4a5568;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a:hover {
-            color: #2b6cb0;
-            transform: translateY(-2px);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 50%;
-            background: #2b6cb0;
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .cart-icon {
-            position: relative;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 0.75rem;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .cart-icon:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
-        }
-
-        .cart-count {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: #e53e3e;
-            color: white;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: 600;
-            animation: pulse 2s infinite;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-align: center;
-            padding: 6rem 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="rgba(255,255,255,0.1)"><polygon points="1000,100 1000,0 0,100"/></svg>');
-            background-size: cover;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            animation: fadeInUp 1s ease-out;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        .hero-cta {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .hero-cta:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-
-        /* Filters */
-        .filters {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 3rem;
-            flex-wrap: wrap;
-            justify-content: center;
-            animation: fadeInUp 0.8s ease-out 0.2s both;
-        }
-
-        .filter-btn {
-            padding: 0.75rem 1.5rem;
-            border: 2px solid #e2e8f0;
-            background: white;
-            color: #4a5568;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .filter-btn.active,
-        .filter-btn:hover {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-color: transparent;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-        }
-
-        /* Products Grid */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .product-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: all 0.4s ease;
-            cursor: pointer;
-            position: relative;
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-        }
-
-        .product-image {
-            width: 100%;
-            height: 250px;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .product-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 100%);
-        }
-
-        .product-info {
-            padding: 2rem;
-        }
-
-        .product-category {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .product-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 0.8rem;
-            color: #2d3748;
-            line-height: 1.4;
-        }
-
-        .product-description {
-            color: #718096;
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .product-price {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .price-current {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #2b6cb0;
-        }
-
-        .price-original {
-            text-decoration: line-through;
-            color: #a0aec0;
-            font-size: 1.2rem;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            width: 100%;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
-        }
-
-        .btn:active {
+        to {
+            opacity: 1;
             transform: translateY(0);
         }
+    }
 
-        /* Loading */
-        .loading {
-            text-align: center;
-            padding: 4rem;
-            font-size: 1.2rem;
-            color: #4a5568;
-            animation: fadeInUp 0.6s ease-out;
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(50px);
         }
-
-        .loading::after {
-            content: '';
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #e2e8f0;
-            border-radius: 50%;
-            border-top-color: #667eea;
-            animation: spin 1s ease-in-out infinite;
-            margin-left: 10px;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* WhatsApp Button */
-        .whatsapp-float {
-            position: fixed;
-            width: 60px;
-            height: 60px;
-            bottom: 30px;
-            right: 30px;
-            background: #25d366;
-            color: white;
-            border-radius: 50%;
-            text-align: center;
-            font-size: 30px;
-            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
-            z-index: 1000;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: pulse 2s infinite;
-        }
-
-        .whatsapp-float:hover {
-            transform: scale(1.1);
-            box-shadow: 0 12px 35px rgba(37, 211, 102, 0.6);
-        }
-
-        /* Footer */
-        .footer {
-            background: #2d3748;
-            color: white;
-            text-align: center;
-            padding: 3rem 2rem;
-            margin-top: 4rem;
-        }
-
-        .footer p {
-            opacity: 0.8;
-        }
-
-        /* Notification */
-        .notification {
-            position: fixed;
-            top: 100px;
-            right: 30px;
-            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 8px 25px rgba(72, 187, 120, 0.4);
-            z-index: 1001;
-            transform: translateX(400px);
-            transition: transform 0.4s ease;
-        }
-
-        .notification.show {
+        to {
+            opacity: 1;
             transform: translateX(0);
         }
+    }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .nav {
-                padding: 1rem;
-            }
-            
-            .container {
-                padding: 2rem 1rem;
-            }
-            
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-                gap: 1.5rem;
-            }
-            
-            .filters {
-                justify-content: flex-start;
-                overflow-x: auto;
-                padding-bottom: 1rem;
-            }
-            
-            .filter-btn {
-                white-space: nowrap;
-            }
+    .header {
+        background: #1a365d;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        animation: slideInRight 0.8s ease-out;
+    }
+
+    .nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+    }
+
+    .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .logo-img {
+        max-height: 60px;
+        width: auto;
+        transition: transform 0.3s ease;
+    }
+
+    .logo-img:hover {
+        transform: scale(1.05);
+    }
+
+    .logo-text {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: white;
+        text-decoration: none;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+    }
+
+    .nav-links a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .nav-links a:hover {
+        color: #a0aec0;
+        transform: translateY(-2px);
+    }
+
+    .nav-links a::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 50%;
+        background: #2b6cb0;
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+    }
+
+    .nav-links a:hover::after {
+        width: 100%;
+    }
+
+    .cart-icon {
+        position: relative;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 0.75rem;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .cart-icon:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+    }
+
+    .cart-count {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background: #e53e3e;
+        color: white;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        font-weight: 600;
+        animation: pulse 2s infinite;
+    }
+
+    .hero-banner {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        display: block;
+        animation: fadeInUp 1s ease-out;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 4rem 2rem;
+    }
+
+    .filters {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 3rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+
+    .filter-btn {
+        padding: 0.75rem 1.5rem;
+        border: 2px solid #e2e8f0;
+        background: white;
+        color: #4a5568;
+        border-radius: 50px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-color: transparent;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .product-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        transition: all 0.4s ease;
+        cursor: pointer;
+        position: relative;
+        animation: fadeInUp 0.6s ease-out;
+    }
+
+    .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    .product-image {
+        width: 100%;
+        height: 250px;
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4rem;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .product-image::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+    }
+
+    .product-info {
+        padding: 2rem;
+    }
+
+    .product-category {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        display: inline-block;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .product-title {
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin-bottom: 0.8rem;
+        color: #2d3748;
+        line-height: 1.4;
+    }
+
+    .product-description {
+        color: #718096;
+        margin-bottom: 1.5rem;
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    .product-price {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .price-current {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #2b6cb0;
+    }
+
+    .price-original {
+        text-decoration: line-through;
+        color: #a0aec0;
+        font-size: 1.2rem;
+    }
+
+    .btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        width: 100%;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s;
+    }
+
+    .btn:hover::before {
+        left: 100%;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+    }
+
+    .btn:active {
+        transform: translateY(0);
+    }
+
+    .loading {
+        text-align: center;
+        padding: 4rem;
+        font-size: 1.2rem;
+        color: #4a5568;
+        animation: fadeInUp 0.6s ease-out;
+    }
+
+    .loading::after {
+        content: '';
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid #e2e8f0;
+        border-radius: 50%;
+        border-top-color: #667eea;
+        animation: spin 1s ease-in-out infinite;
+        margin-left: 10px;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    .whatsapp-float {
+        position: fixed;
+        width: 60px;
+        height: 60px;
+        bottom: 30px;
+        right: 30px;
+        background: #25d366;
+        color: white;
+        border-radius: 50%;
+        text-align: center;
+        font-size: 30px;
+        box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+        z-index: 1000;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: pulse 2s infinite;
+    }
+
+    .whatsapp-float:hover {
+        transform: scale(1.1);
+        box-shadow: 0 12px 35px rgba(37, 211, 102, 0.6);
+    }
+
+    .footer {
+        background: #2d3748;
+        color: white;
+        text-align: center;
+        padding: 3rem 2rem;
+        margin-top: 4rem;
+    }
+
+    .footer-links {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    .footer-links a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+        color: #a0aec0;
+    }
+
+    .footer p {
+        opacity: 0.8;
+    }
+
+    .notification {
+        position: fixed;
+        top: 100px;
+        right: 30px;
+        background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 8px 25px rgba(72, 187, 120, 0.4);
+        z-index: 1001;
+        transform: translateX(400px);
+        transition: transform 0.4s ease;
+    }
+
+    .notification.show {
+        transform: translateX(0);
+    }
+
+    @media (max-width: 768px) {
+        .hero-banner {
+            height: 250px;
         }
-    </style>
+        
+        .nav {
+            padding: 1rem;
+        }
+        .logo-img {
+            max-height: 50px;
+        }
+        .logo-text {
+            font-size: 1.5rem;
+        }
+        .cart-icon {
+            padding: 0.6rem;
+        }
+        .cart-count {
+            width: 20px;
+            height: 20px;
+            font-size: 0.7rem;
+        }
+        
+        .container {
+            padding: 2rem 1rem;
+        }
+        
+        .products-grid {
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .filters {
+            justify-content: flex-start;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
+        
+        .filter-btn {
+            white-space: nowrap;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
+        }
+        .product-card {
+            margin-bottom: 1rem;
+        }
+        .product-image {
+            height: 200px;
+            font-size: 3rem;
+        }
+        .product-info {
+            padding: 1.5rem;
+        }
+        .product-category {
+            padding: 0.3rem 0.8rem;
+            font-size: 0.75rem;
+        }
+        .product-title {
+            font-size: 1.2rem;
+        }
+        .product-description {
+            font-size: 0.9rem;
+        }
+        .price-current {
+            font-size: 1.5rem;
+        }
+        .price-original {
+            font-size: 1rem;
+        }
+        .btn {
+            padding: 0.8rem 1.5rem;
+            font-size: 0.9rem;
+        }
+        .footer {
+            padding: 2rem 1rem;
+        }
+        .whatsapp-float {
+            width: 50px;
+            height: 50px;
+            font-size: 25px;
+            bottom: 20px;
+            right: 20px;
+        }
+        .footer-links {
+            gap: 1rem;
+            font-size: 0.9rem;
+        }
+    }
+</style>
 </head>
 <body>
-    <header class="header">
-        <nav class="nav">
-            <div class="logo-container">
-                <img src="https://i.imgur.com/5wDerGV.png" alt="Bookify" class="logo-img">
-                <a href="index.html" class="logo-text">Bookify</a>
-            </div>
-            <div class="nav-links">
-                <a href="index.html">Início</a>
-                <a href="carrinho.html">
-                    <div class="cart-icon">
-                        🛒
-                        <span class="cart-count" id="cartCount">0</span>
-                    </div>
-                </a>
-            </div>
-        </nav>
-    </header>
-
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Descubra Seu Próximo Livro</h1>
-            <p>Os melhores títulos com os melhores preços, entregues com carinho</p>
-            <button class="hero-cta" onclick="document.querySelector('.filters').scrollIntoView({behavior: 'smooth'})">
-                Explorar Catálogo
-            </button>
+<header class="header">
+    <nav class="nav">
+        <div class="logo-container">
+            <img src="https://i.imgur.com/5wDerGV.png" alt="BookFY" class="logo-img">
+            <a href="index.html" class="logo-text">BookFY</a>
         </div>
-    </section>
-
-    <main class="container">
-        <div class="filters">
-            <button class="filter-btn active" data-filter="todos">📚 Todos</button>
-            <button class="filter-btn" data-filter="romance">💕 Romance</button>
-            <button class="filter-btn" data-filter="ficcao">🚀 Ficção</button>
-            <button class="filter-btn" data-filter="biografia">👤 Biografia</button>
-            <button class="filter-btn" data-filter="tecnologia">💻 Tecnologia</button>
-            <button class="filter-btn" data-filter="autoajuda">✨ Autoajuda</button>
+        <div class="nav-links">
+            <a href="carrinho.html">
+                <div class="cart-icon">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </a>
         </div>
+    </nav>
+</header>
 
-        <div id="loading" class="loading">Carregando nossos melhores livros</div>
-        <div id="productsGrid" class="products-grid" style="display: none;"></div>
-    </main>
+<img src="/images/hero-banner.jpeg" alt="Descubra Seu Próximo Livro" class="hero-banner">
 
-    <footer class="footer">
-        <p>&copy; 2024 Bookify. Feito com ❤️ para amantes da leitura</p>
-    </footer>
-
-    <!-- WhatsApp Float Button -->
-    <div class="whatsapp-float" onclick="window.open('https://wa.me/5597981027196?text=Olá! Gostaria de saber mais sobre os livros da Bookify! 📚', '_blank')">
-        📱
+<main class="container">
+    <div class="filters">
+        <button class="filter-btn active" data-filter="todos">📚 Todos</button>
+        <button class="filter-btn" data-filter="romance">💕 Romance</button>
+        <button class="filter-btn" data-filter="ficcao">🚀 Ficção</button>
+        <button class="filter-btn" data-filter="biografia">👤 Biografia</button>
+        <button class="filter-btn" data-filter="tecnologia">💻 Tecnologia</button>
+        <button class="filter-btn" data-filter="autoajuda">✨ Autoajuda</button>
     </div>
 
-    <!-- Notification -->
-    <div id="notification" class="notification">
-        <span id="notificationText"></span>
+    <div id="loading" class="loading">Carregando nossos melhores livros</div>
+    <div id="productsGrid" class="products-grid" style="display: none;"></div>
+</main>
+
+<footer class="footer">
+    <p>© 2024 BookFY. Todos os direitos reservados.</p>
+    <div class="footer-links">
+        <a href="politica-privacidade.html">Política de Privacidade</a>
+        <a href="termos-condicoes.html">Termos e Condições</a>
     </div>
+</footer>
 
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<div class="whatsapp-float" onclick="window.open('https://wa.me/5597981027196?text=Olá! Gostaria de saber mais sobre os livros da BookFY! 📚', '_blank')">
+    📱
+</div>
 
-    <script>
-        // Configuração do Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyCCTmhjYPplbBUg3ZnBNLMa_qsCnZu_8JU",
-            authDomain: "extrabookfy.firebaseapp.com",
-            databaseURL: "https://extrabookfy-default-rtdb.firebaseio.com",
-            projectId: "extrabookfy",
-            storageBucket: "extrabookfy.firebasestorage.app",
-            messagingSenderId: "887074490735",
-            appId: "1:887074490735:web:547c3e06dff2f8a233409a"
-        };
+<div id="notification" class="notification">
+    <span id="notificationText"></span>
+</div>
 
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
-        let produtos = [];
-        let carrinho = {};
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyCCTmhjYPplbBUg3ZnBNLMa_qsCnZu_8JU",
+        authDomain: "extrabookfy.firebaseapp.com",
+        databaseURL: "https://extrabookfy-default-rtdb.firebaseio.com",
+        projectId: "extrabookfy",
+        storageBucket: "extrabookfy.firebasestorage.app",
+        messagingSenderId: "887074490735",
+        appId: "1:887074490735:web:547c3e06dff2f8a233409a"
+    };
 
-        // Carregar produtos do Firebase
-        async function carregarProdutos() {
-            try {
-                // Listener em tempo real para produtos
-                database.ref('produtos').on('value', (snapshot) => {
-                    produtos = [];
-                    
-                    snapshot.forEach((childSnapshot) => {
-                        const produto = childSnapshot.val();
-                        if (produto && produto.ativo !== false) { // Só produtos ativos
-                            produtos.push({
-                                id: childSnapshot.key,
-                                ...produto
-                            });
-                        }
-                    });
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
 
-                    // Se não houver produtos, criar alguns exemplos
-                    if (produtos.length === 0) {
-                        criarProdutosExemplo().then(() => {
-                            // Os produtos serão carregados automaticamente pelo listener
+    let produtos = [];
+    let carrinho = {};
+
+    async function carregarProdutos() {
+        try {
+            database.ref('produtos').on('value', (snapshot) => {
+                produtos = [];
+                
+                snapshot.forEach((childSnapshot) => {
+                    const produto = childSnapshot.val();
+                    if (produto && produto.ativo !== false) {
+                        produtos.push({
+                            id: childSnapshot.key,
+                            ...produto
                         });
-                        return;
                     }
-
-                    exibirProdutos(produtos);
-                    document.getElementById('loading').style.display = 'none';
-                    document.getElementById('productsGrid').style.display = 'grid';
                 });
-            } catch (error) {
-                console.error('Erro ao carregar produtos:', error);
-                document.getElementById('loading').innerHTML = 'Ops! Erro ao carregar os livros 😔';
-            }
-        }
 
-        // Criar produtos de exemplo
-        async function criarProdutosExemplo() {
-            const exemplos = [
-                {
-                    nome: "O Alquimista",
-                    descricao: "Uma jornada inesquecível em busca dos sonhos e do tesouro interior.",
-                    categoria: "Romance",
-                    filtro: "romance",
-                    precoNormal: 29.90,
-                    precoPromocional: 19.90,
-                    imagem: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=600&fit=crop"
-                },
-                {
-                    nome: "1984",
-                    descricao: "O clássico distópico de George Orwell sobre vigilância e controle.",
-                    categoria: "Ficção",
-                    filtro: "ficcao",
-                    precoNormal: 34.90,
-                    precoPromocional: null,
-                    imagem: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=600&fit=crop"
-                },
-                {
-                    nome: "Steve Jobs",
-                    descricao: "A biografia autorizada do visionário que revolucionou a tecnologia.",
-                    categoria: "Biografia",
-                    filtro: "biografia",
-                    precoNormal: 45.90,
-                    precoPromocional: 35.90,
-                    imagem: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop"
-                },
-                {
-                    nome: "Clean Code",
-                    descricao: "Manual essencial para desenvolvedores escreverem código limpo.",
-                    categoria: "Tecnologia",
-                    filtro: "tecnologia",
-                    precoNormal: 89.90,
-                    precoPromocional: 69.90,
-                    imagem: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=600&fit=crop"
-                },
-                {
-                    nome: "O Poder do Agora",
-                    descricao: "Guia espiritual para viver plenamente o momento presente.",
-                    categoria: "Autoajuda",
-                    filtro: "autoajuda",
-                    precoNormal: 32.90,
-                    precoPromocional: 24.90,
-                    imagem: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=600&fit=crop"
+                if (produtos.length === 0) {
+                    criarProdutosExemplo().then(() => {
+                    });
+                    return;
                 }
-            ];
 
-            for (const produto of exemplos) {
-                const novoId = database.ref('produtos').push().key;
-                await database.ref(`produtos/${novoId}`).set({
-                    ...produto,
-                    dataCriacao: new Date().toISOString(),
-                    ativo: true
-                });
-            }
-        }
-
-        // Exibir produtos na tela
-        function exibirProdutos(produtosParaExibir) {
-            const grid = document.getElementById('productsGrid');
-            grid.innerHTML = '';
-
-            produtosParaExibir.forEach((produto, index) => {
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                card.style.animationDelay = `${index * 0.1}s`;
-                card.onclick = () => verProduto(produto.id);
-
-                const precoOriginal = produto.precoPromocional ? 
-                    `<span class="price-original">R$ ${produto.precoNormal.toFixed(2)}</span>` : '';
-                const precoAtual = produto.precoPromocional || produto.precoNormal;
-
-                card.innerHTML = `
-                    <div class="product-image">
-                        ${produto.imagem ? `<img src="${produto.imagem}" alt="${produto.nome}" style="width:100%;height:100%;object-fit:cover;">` : '📖'}
-                    </div>
-                    <div class="product-info">
-                        <div class="product-category">${produto.categoria}</div>
-                        <h3 class="product-title">${produto.nome}</h3>
-                        <p class="product-description">${produto.descricao}</p>
-                        <div class="product-price">
-                            <span class="price-current">R$ ${precoAtual.toFixed(2)}</span>
-                            ${precoOriginal}
-                        </div>
-                        <button class="btn" onclick="event.stopPropagation(); adicionarAoCarrinho('${produto.id}')">
-                            🛒 Adicionar ao Carrinho
-                        </button>
-                    </div>
-                `;
-
-                grid.appendChild(card);
-            });
-        }
-
-        // Filtrar produtos
-        function filtrarProdutos(filtro) {
-            if (filtro === 'todos') {
                 exibirProdutos(produtos);
-            } else {
-                const produtosFiltrados = produtos.filter(produto => 
-                    produto.filtro.toLowerCase() === filtro.toLowerCase()
-                );
-                exibirProdutos(produtosFiltrados);
-            }
-        }
-
-        // Adicionar ao carrinho
-        async function adicionarAoCarrinho(produtoId) {
-            const produto = produtos.find(p => p.id === produtoId);
-            if (!produto) return;
-
-            try {
-                // Carregar carrinho atual do Firebase
-                const snapshot = await database.ref('carrinho').once('value');
-                let carrinho = snapshot.val() || {};
-
-                if (carrinho[produtoId]) {
-                    carrinho[produtoId].quantidade += 1;
-                } else {
-                    carrinho[produtoId] = {
-                        ...produto,
-                        quantidade: 1
-                    };
-                }
-
-                // Salvar no Firebase
-                await database.ref('carrinho').set(carrinho);
-                
-                // Atualizar contador do carrinho
-                atualizarContadorCarrinho();
-                
-                // Mostrar notificação
-                mostrarNotificacao(`📚 ${produto.nome} adicionado ao carrinho!`);
-                
-            } catch (error) {
-                console.error('Erro ao adicionar ao carrinho:', error);
-                mostrarNotificacao('❌ Erro ao adicionar produto', 'error');
-            }
-        }
-
-        // Mostrar notificação
-        function mostrarNotificacao(texto, tipo = 'success') {
-            const notification = document.getElementById('notification');
-            const notificationText = document.getElementById('notificationText');
-            
-            notificationText.textContent = texto;
-            notification.className = `notification ${tipo}`;
-            notification.classList.add('show');
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
-
-        // Atualizar contador do carrinho
-        async function atualizarContadorCarrinho() {
-            try {
-                const snapshot = await database.ref('carrinho').once('value');
-                const carrinho = snapshot.val() || {};
-                
-                const totalItens = Object.values(carrinho).reduce((total, item) => total + item.quantidade, 0);
-                document.getElementById('cartCount').textContent = totalItens;
-            } catch (error) {
-                console.error('Erro ao atualizar contador:', error);
-            }
-        }
-
-        // Ver produto individual
-        function verProduto(produtoId) {
-            window.location.href = `produto.html?id=${produtoId}`;
-        }
-
-        // Event listeners para filtros
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                filtrarProdutos(btn.dataset.filter);
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('productsGrid').style.display = 'grid';
             });
-        });
+        } catch (error) {
+            console.error('Erro ao carregar produtos:', error);
+            document.getElementById('loading').innerHTML = 'Ops! Erro ao carregar os livros 😔';
+        }
+    }
 
-        // Inicializar página
-        document.addEventListener('DOMContentLoaded', () => {
-            carregarProdutos();
+    async function criarProdutosExemplo() {
+        const exemplos = [
+            {
+                nome: "O Alquimista",
+                descricao: "Uma jornada inesquecível em busca dos sonhos e do tesouro interior.",
+                categoria: "Romance",
+                filtro: "romance",
+                precoNormal: 29.90,
+                precoPromocional: 19.90,
+                imagem: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=600&fit=crop"
+            },
+            {
+                nome: "1984",
+                descricao: "O clássico distópico de George Orwell sobre vigilância e controle.",
+                categoria: "Ficção",
+                filtro: "ficcao",
+                precoNormal: 34.90,
+                precoPromocional: null,
+                imagem: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=600&fit=crop"
+            },
+            {
+                nome: "Steve Jobs",
+                descricao: "A biografia autorizada do visionário que revolucionou a tecnologia.",
+                categoria: "Biografia",
+                filtro: "biografia",
+                precoNormal: 45.90,
+                precoPromocional: 35.90,
+                imagem: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop"
+            },
+            {
+                nome: "Clean Code",
+                descricao: "Manual essencial para desenvolvedores escreverem código limpo.",
+                categoria: "Tecnologia",
+                filtro: "tecnologia",
+                precoNormal: 89.90,
+                precoPromocional: 69.90,
+                imagem: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=600&fit=crop"
+            },
+            {
+                nome: "O Poder do Agora",
+                descricao: "Guia espiritual para viver plenamente o momento presente.",
+                categoria: "Autoajuda",
+                filtro: "autoajuda",
+                precoNormal: 32.90,
+                precoPromocional: 24.90,
+                imagem: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=600&fit=crop"
+            }
+        ];
+
+        for (const produto of exemplos) {
+            const novoId = database.ref('produtos').push().key;
+            await database.ref(`produtos/${novoId}`).set({
+                ...produto,
+                dataCriacao: new Date().toISOString(),
+                ativo: true
+            });
+        }
+    }
+
+    function exibirProdutos(produtosParaExibir) {
+        const grid = document.getElementById('productsGrid');
+        grid.innerHTML = '';
+
+        produtosParaExibir.forEach((produto, index) => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.style.animationDelay = `${index * 0.1}s`;
+            card.onclick = () => verProduto(produto.id);
+
+            const precoOriginal = produto.precoPromocional ? 
+                `<span class="price-original">R$ ${produto.precoNormal.toFixed(2)}</span>` : '';
+            const precoAtual = produto.precoPromocional || produto.precoNormal;
+
+            card.innerHTML = `
+                <div class="product-image">
+                    ${produto.imagem ? `<img src="${produto.imagem}" alt="${produto.nome}" style="width:100%;height:100%;object-fit:cover;">` : '📖'}
+                </div>
+                <div class="product-info">
+                    <div class="product-category">${produto.categoria}</div>
+                    <h3 class="product-title">${produto.nome}</h3>
+                    <p class="product-description">${produto.descricao}</p>
+                    <div class="product-price">
+                        <span class="price-current">R$ ${precoAtual.toFixed(2)}</span>
+                        ${precoOriginal}
+                    </div>
+                    <button class="btn" onclick="event.stopPropagation(); adicionarAoCarrinho('${produto.id}')">
+                        🛒 Adicionar ao Carrinho
+                    </button>
+                </div>
+            `;
+
+            grid.appendChild(card);
+        });
+    }
+
+    function filtrarProdutos(filtro) {
+        if (filtro === 'todos') {
+            exibirProdutos(produtos);
+        } else {
+            const produtosFiltrados = produtos.filter(produto => 
+                produto.filtro.toLowerCase() === filtro.toLowerCase()
+            );
+            exibirProdutos(produtosFiltrados);
+        }
+    }
+
+    async function adicionarAoCarrinho(produtoId) {
+        const produto = produtos.find(p => p.id === produtoId);
+        if (!produto) return;
+
+        try {
+            const snapshot = await database.ref('carrinho').once('value');
+            let carrinho = snapshot.val() || {};
+
+            if (carrinho[produtoId]) {
+                carrinho[produtoId].quantidade += 1;
+            } else {
+                carrinho[produtoId] = {
+                    ...produto,
+                    quantidade: 1
+                };
+            }
+
+            await database.ref('carrinho').set(carrinho);
+            
             atualizarContadorCarrinho();
             
-            // Atualizar estatísticas de visitantes
-            database.ref('adminStats/visitantes').transaction((current) => (current || 0) + 1);
+            mostrarNotificacao(`📚 ${produto.nome} adicionado ao carrinho!`);
+            
+        } catch (error) {
+            console.error('Erro ao adicionar ao carrinho:', error);
+            mostrarNotificacao('❌ Erro ao adicionar produto', 'error');
+        }
+    }
+
+    function mostrarNotificacao(texto, tipo = 'success') {
+        const notification = document.getElementById('notification');
+        const notificationText = document.getElementById('notificationText');
+        
+        notificationText.textContent = texto;
+        notification.className = `notification ${tipo}`;
+        notification.classList.add('show');
+        
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 3000);
+    }
+
+    async function atualizarContadorCarrinho() {
+        try {
+            const snapshot = await database.ref('carrinho').once('value');
+            const carrinho = snapshot.val() || {};
+            
+            const totalItens = Object.values(carrinho).reduce((total, item) => total + item.quantidade, 0);
+            document.getElementById('cartCount').textContent = totalItens;
+        } catch (error) {
+            console.error('Erro ao atualizar contador:', error);
+        }
+    }
+
+    function verProduto(produtoId) {
+        window.location.href = `produto.html?id=${produtoId}`;
+    }
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            filtrarProdutos(btn.dataset.filter);
         });
-    </script>
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        carregarProdutos();
+        atualizarContadorCarrinho();
+        
+        database.ref('adminStats/visitantes').transaction((current) => (current || 0) + 1);
+    });
+</script>
 </body>
 </html>
