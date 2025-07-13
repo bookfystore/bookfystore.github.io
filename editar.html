@@ -112,6 +112,12 @@
             color: #1a365d;
         }
 
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .product-info {
             padding: 1.5rem;
         }
@@ -248,11 +254,14 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0,0,0,0.5);
+            display: flex; /* Added for centering */
+            align-items: center; /* Added for centering */
+            justify-content: center; /* Added for centering */
         }
 
         .modal-content {
             background-color: white;
-            margin: 5% auto;
+            margin: auto; /* Changed from 5% auto */
             padding: 2rem;
             border-radius: 10px;
             width: 90%;
@@ -317,6 +326,12 @@
             gap: 1rem;
         }
 
+        .error-message { /* Added for modal errors */
+            color: #e53e3e;
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
         @media (max-width: 768px) {
             .products-grid {
                 grid-template-columns: 1fr;
@@ -368,18 +383,20 @@
                 <input type="hidden" id="editId">
                 
                 <div class="form-group">
-                    <label class="form-label" for="editNome">Nome do Produto</label>
+                    <label class="form-label" for="editNome">Nome do Produto *</label>
                     <input type="text" id="editNome" class="form-input" required>
+                    <div class="error-message" id="editNomeErrorModal"></div>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="editDescricao">Descrição</label>
+                    <label class="form-label" for="editDescricao">Descrição *</label>
                     <textarea id="editDescricao" class="form-textarea" required></textarea>
+                    <div class="error-message" id="editDescricaoErrorModal"></div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label class="form-label" for="editCategoria">Categoria</label>
+                        <label class="form-label" for="editCategoria">Categoria *</label>
                         <select id="editCategoria" class="form-select" required>
                             <option value="">Selecione uma categoria</option>
                             <option value="Romance">Romance</option>
@@ -391,29 +408,34 @@
                             <option value="Ciência">Ciência</option>
                             <option value="Arte">Arte</option>
                         </select>
+                        <div class="error-message" id="editCategoriaErrorModal"></div>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="editFiltro">Filtro</label>
-                        <input type="text" id="editFiltro" class="form-input" required>
+                        <label class="form-label" for="editFiltro">Filtro *</label>
+                        <input type="text" id="editFiltro" class="form-input" placeholder="Ex: romance, ficção" required>
+                        <div class="error-message" id="editFiltroErrorModal"></div>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label class="form-label" for="editPrecoNormal">Preço Normal (R$)</label>
+                        <label class="form-label" for="editPrecoNormal">Preço Normal (R$) *</label>
                         <input type="number" id="editPrecoNormal" class="form-input" step="0.01" min="0" required>
+                        <div class="error-message" id="editPrecoNormalErrorModal"></div>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label" for="editPrecoPromocional">Preço Promocional (R$)</label>
                         <input type="number" id="editPrecoPromocional" class="form-input" step="0.01" min="0">
+                        <div class="error-message" id="editPrecoPromocionalErrorModal"></div>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" for="editImagem">URL da Imagem</label>
-                    <input type="url" id="editImagem" class="form-input">
+                    <input type="url" id="editImagem" class="form-input" placeholder="https://exemplo.com/imagem.jpg">
+                    <div class="error-message" id="editImagemErrorModal"></div>
                 </div>
 
                 <div style="margin-top: 2rem; text-align: right;">
@@ -477,8 +499,10 @@
                 
                 if (produtos.length === 0) {
                     document.getElementById('emptyState').style.display = 'block';
+                    document.getElementById('productsGrid').style.display = 'none'; // Esconder grid se vazio
                 } else {
                     document.getElementById('productsGrid').style.display = 'grid';
+                    document.getElementById('emptyState').style.display = 'none'; // Esconder empty state se houver produtos
                 }
             } catch (error) {
                 console.error('Erro ao carregar produtos:', error);
@@ -526,6 +550,10 @@
             const produto = produtos.find(p => p.id === produtoId);
             if (!produto) return;
 
+            // Limpar erros anteriores no modal
+            document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+            document.querySelectorAll('.form-input, .form-select, .form-textarea').forEach(el => el.classList.remove('error'));
+
             // Preencher formulário de edição
             document.getElementById('editId').value = produto.id;
             document.getElementById('editNome').value = produto.nome;
@@ -537,7 +565,7 @@
             document.getElementById('editImagem').value = produto.imagem || '';
 
             // Mostrar modal
-            document.getElementById('editModal').style.display = 'block';
+            document.getElementById('editModal').style.display = 'flex'; // Use flex for centering
         }
 
         // Fechar modal
@@ -545,10 +573,64 @@
             document.getElementById('editModal').style.display = 'none';
         }
 
+        // Validar formulário de edição
+        function validarFormularioEdicao() {
+            let isValid = true;
+            const campos = ['editNome', 'editDescricao', 'editCategoria', 'editFiltro', 'editPrecoNormal'];
+            
+            // Limpar erros anteriores
+            campos.forEach(campo => {
+                const input = document.getElementById(campo);
+                const errorDiv = document.getElementById(campo + 'ErrorModal');
+                input.classList.remove('error');
+                errorDiv.textContent = '';
+            });
+
+            // Validar campos obrigatórios
+            campos.forEach(campo => {
+                const input = document.getElementById(campo);
+                const errorDiv = document.getElementById(campo + 'ErrorModal');
+                
+                if (!input.value.trim()) {
+                    input.classList.add('error');
+                    errorDiv.textContent = 'Este campo é obrigatório';
+                    isValid = false;
+                }
+            });
+
+            // Validar preços
+            const precoNormal = parseFloat(document.getElementById('editPrecoNormal').value);
+            const precoPromocional = parseFloat(document.getElementById('editPrecoPromocional').value);
+
+            if (isNaN(precoNormal) || precoNormal <= 0) {
+                document.getElementById('editPrecoNormal').classList.add('error');
+                document.getElementById('editPrecoNormalErrorModal').textContent = 'Preço deve ser maior que zero';
+                isValid = false;
+            }
+
+            if (document.getElementById('editPrecoPromocional').value.trim() !== '' && (isNaN(precoPromocional) || precoPromocional <= 0)) {
+                document.getElementById('editPrecoPromocional').classList.add('error');
+                document.getElementById('editPrecoPromocionalErrorModal').textContent = 'Preço promocional deve ser maior que zero';
+                isValid = false;
+            }
+
+            if (precoPromocional && precoPromocional >= precoNormal) {
+                document.getElementById('editPrecoPromocional').classList.add('error');
+                document.getElementById('editPrecoPromocionalErrorModal').textContent = 'Preço promocional deve ser menor que o preço normal';
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
         // Salvar edição
         document.getElementById('editForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
+            if (!validarFormularioEdicao()) {
+                return;
+            }
+
             const produtoId = document.getElementById('editId').value;
             
             try {
@@ -564,7 +646,7 @@
                     dataAtualizacao: new Date().toISOString()
                 };
 
-                // Manter dados originais
+                // Manter dados originais como dataCriacao, ativo, etc.
                 const produtoOriginal = produtos.find(p => p.id === produtoId);
                 const produtoCompleto = {
                     ...produtoOriginal,
@@ -575,7 +657,7 @@
                 
                 alert('Produto atualizado com sucesso!');
                 fecharModal();
-                carregarProdutos();
+                carregarProdutos(); // Recarregar produtos para exibir as alterações
                 
             } catch (error) {
                 console.error('Erro ao atualizar produto:', error);
@@ -592,7 +674,7 @@
             try {
                 await database.ref(`produtos/${produtoId}`).remove();
                 alert('Produto excluído com sucesso!');
-                carregarProdutos();
+                carregarProdutos(); // Recarregar produtos para exibir as alterações
             } catch (error) {
                 console.error('Erro ao excluir produto:', error);
                 alert('Erro ao excluir produto.');
