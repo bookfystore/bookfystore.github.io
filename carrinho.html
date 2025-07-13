@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho - Bookify</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #1a365d;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #1a365d;
+        }
+
+        .cart-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .cart-items {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-image {
+            width: 80px;
+            height: 80px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #1a365d;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #1a365d;
+        }
+
+        .item-price {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quantity-btn {
+            background: #1a365d;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quantity-display {
+            padding: 0.5rem;
+            min-width: 40px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .remove-btn {
+            background: #e53e3e;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+
+        .cart-summary {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+
+        .summary-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #1a365d;
+        }
+
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding: 0.5rem 0;
+        }
+
+        .summary-total {
+            border-top: 2px solid #1a365d;
+            padding-top: 1rem;
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .checkout-btn {
+            background: #1a365d;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            width: 100%;
+            margin-top: 1rem;
+            transition: background 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background: #2c5282;
+        }
+
+        .checkout-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 4rem;
+            color: #666;
+        }
+
+        .empty-cart h2 {
+            margin-bottom: 1rem;
+        }
+
+        .continue-shopping {
+            background: #1a365d;
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+
+        .back-btn {
+            background: transparent;
+            color: #1a365d;
+            border: 2px solid #1a365d;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            background: #1a365d;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .cart-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .quantity-controls {
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="index.html" class="logo">📚 Bookify</a>
+            <div class="nav-links">
+                <a href="index.html">Início</a>
+                <a href="carrinho.html">Carrinho</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <a href="index.html" class="back-btn">← Continuar Comprando</a>
+        <h1 class="page-title">Meu Carrinho</h1>
+        
+        <div id="cartContainer"></div>
+    </main>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+    <script>
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCCTmhjYPplbBUg3ZnBNLMa_qsCnZu_8JU",
+            authDomain: "extrabookfy.firebaseapp.com",
+            databaseURL: "https://extrabookfy-default-rtdb.firebaseio.com",
+            projectId: "extrabookfy",
+            storageBucket: "extrabookfy.firebasestorage.app",
+            messagingSenderId: "887074490735",
+            appId: "1:887074490735:web:547c3e06dff2f8a233409a"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        let carrinho = {};
+
+        // Carregar carrinho do Firebase
+        async function carregarCarrinho() {
+            try {
+                const snapshot = await database.ref('carrinho').once('value');
+                carrinho = snapshot.val() || {};
+                exibirCarrinho();
+            } catch (error) {
+                console.error('Erro ao carregar carrinho:', error);
+            }
+        }
+
+        // Exibir carrinho na tela
+        function exibirCarrinho() {
+            const container = document.getElementById('cartContainer');
+            const itensCarrinho = Object.values(carrinho);
+
+            if (itensCarrinho.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-cart">
+                        <h2>Seu carrinho está vazio</h2>
+                        <p>Adicione alguns livros incríveis ao seu carrinho!</p>
+                        <a href="index.html" class="continue-shopping">Continuar Comprando</a>
+                    </div>
+                `;
+                return;
+            }
+
+            let subtotal = 0;
+            let itensHtml = '';
+
+            itensCarrinho.forEach(item => {
+                const precoUnitario = item.precoPromocional || item.precoNormal;
+                const precoTotal = precoUnitario * item.quantidade;
+                subtotal += precoTotal;
+
+                itensHtml += `
+                    <div class="cart-item">
+                        <div class="item-image">
+                            ${item.imagem ? `<img src="${item.imagem}" alt="${item.nome}" style="width:100%;height:100%;object-fit:cover;">` : '📖'}
+                        </div>
+                        <div class="item-info">
+                            <div class="item-title">${item.nome}</div>
+                            <div class="item-price">R$ ${precoUnitario.toFixed(2)} cada</div>
+                        </div>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="alterarQuantidade('${item.id}', -1)">-</button>
+                            <div class="quantity-display">${item.quantidade}</div>
+                            <button class="quantity-btn" onclick="alterarQuantidade('${item.id}', 1)">+</button>
+                        </div>
+                        <button class="remove-btn" onclick="removerItem('${item.id}')">Remover</button>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = `
+                <div class="cart-container">
+                    <div class="cart-items">
+                        ${itensHtml}
+                    </div>
+                    <div class="cart-summary">
+                        <h3 class="summary-title">Resumo do Pedido</h3>
+                        <div class="summary-line">
+                            <span>Subtotal:</span>
+                            <span>R$ ${subtotal.toFixed(2)}</span>
+                        </div>
+                        <div class="summary-line">
+                            <span>Frete:</span>
+                            <span>Grátis</span>
+                        </div>
+                        <div class="summary-line summary-total">
+                            <span>Total:</span>
+                            <span>R$ ${subtotal.toFixed(2)}</span>
+                        </div>
+                        <button class="checkout-btn" onclick="irParaCheckout()">
+                            Finalizar Compra
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Alterar quantidade de um item
+        async function alterarQuantidade(itemId, delta) {
+            if (!carrinho[itemId]) return;
+
+            const novaQuantidade = carrinho[itemId].quantidade + delta;
+            
+            if (novaQuantidade <= 0) {
+                await removerItem(itemId);
+                return;
+            }
+
+            carrinho[itemId].quantidade = novaQuantidade;
+            
+            try {
+                await database.ref('carrinho').set(carrinho);
+                exibirCarrinho();
+            } catch (error) {
+                console.error('Erro ao atualizar quantidade:', error);
+            }
+        }
+
+        // Remover item do carrinho
+        async function removerItem(itemId) {
+            if (!carrinho[itemId]) return;
+
+            delete carrinho[itemId];
+            
+            try {
+                await database.ref('carrinho').set(carrinho);
+                exibirCarrinho();
+            } catch (error) {
+                console.error('Erro ao remover item:', error);
+            }
+        }
+
+        // Ir para checkout
+        function irParaCheckout() {
+            const itensCarrinho = Object.values(carrinho);
+            if (itensCarrinho.length === 0) {
+                alert('Seu carrinho está vazio!');
+                return;
+            }
+            
+            window.location.href = 'checkout.html';
+        }
+
+        // Inicializar página
+        document.addEventListener('DOMContentLoaded', () => {
+            carregarCarrinho();
+        });
+    </script>
+</body>
+</html>

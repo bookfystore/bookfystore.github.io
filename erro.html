@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erro - Bookify</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .error-container {
+            text-align: center;
+            background: white;
+            color: #1a365d;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            max-width: 500px;
+            margin: 1rem;
+        }
+
+        .error-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            color: #e53e3e;
+        }
+
+        .error-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #1a365d;
+        }
+
+        .error-message {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            color: #666;
+        }
+
+        .error-details {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .btn {
+            background: #1a365d;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0.5rem;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #2c5282;
+        }
+
+        .btn-retry {
+            background: #e53e3e;
+        }
+
+        .btn-retry:hover {
+            background: #c53030;
+        }
+
+        @media (max-width: 768px) {
+            .error-container {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            
+            .error-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-icon">❌</div>
+        <h1 class="error-title">Ops! Algo deu errado</h1>
+        <p class="error-message">
+            Não foi possível processar seu pedido no momento. Por favor, tente novamente ou entre em contato conosco.
+        </p>
+        
+        <div class="error-details">
+            <p><strong>Possíveis causas:</strong></p>
+            <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                <li>Problema de conexão com a internet</li>
+                <li>Erro temporário no sistema</li>
+                <li>Dados incompletos no formulário</li>
+            </ul>
+        </div>
+
+        <div>
+            <a href="checkout.html" class="btn btn-retry">🔄 Tentar Novamente</a>
+            <a href="index.html" class="btn">🏠 Voltar ao Início</a>
+            <a href="https://wa.me/5597981027196" class="btn" target="_blank">📱 Contato</a>
+        </div>
+    </div>
+</body>
+</html>

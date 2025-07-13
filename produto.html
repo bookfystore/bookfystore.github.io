@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produto - Bookify</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #1a365d;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .cart-icon {
+            position: relative;
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #e53e3e;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .product-detail {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .product-image-large {
+            background: #e2e8f0;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: #1a365d;
+        }
+
+        .product-info-detail {
+            padding: 2rem;
+        }
+
+        .product-title-large {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #1a365d;
+        }
+
+        .product-description-large {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .product-category {
+            background: #1a365d;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .product-price-large {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .price-current-large {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1a365d;
+        }
+
+        .price-original-large {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 1.5rem;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quantity-btn {
+            background: #1a365d;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quantity-input {
+            width: 60px;
+            text-align: center;
+            padding: 0.5rem;
+            border: 2px solid #1a365d;
+            border-radius: 5px;
+            font-size: 1.2rem;
+        }
+
+        .btn {
+            background: #1a365d;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: background 0.3s;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background: #2c5282;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 4rem;
+            font-size: 1.2rem;
+            color: #1a365d;
+        }
+
+        .back-btn {
+            background: transparent;
+            color: #1a365d;
+            border: 2px solid #1a365d;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            background: #1a365d;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .product-detail {
+                grid-template-columns: 1fr;
+            }
+            
+            .product-image-large {
+                height: 300px;
+            }
+            
+            .product-title-large {
+                font-size: 1.5rem;
+            }
+            
+            .price-current-large {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="index.html" class="logo">📚 Bookify</a>
+            <div class="nav-links">
+                <a href="index.html">Início</a>
+                <a href="carrinho.html">
+                    <div class="cart-icon">
+                        🛒
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <a href="index.html" class="back-btn">← Voltar</a>
+        
+        <div id="loading" class="loading">Carregando produto...</div>
+        <div id="productDetail" style="display: none;"></div>
+    </main>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+    <script>
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCCTmhjYPplbBUg3ZnBNLMa_qsCnZu_8JU",
+            authDomain: "extrabookfy.firebaseapp.com",
+            databaseURL: "https://extrabookfy-default-rtdb.firebaseio.com",
+            projectId: "extrabookfy",
+            storageBucket: "extrabookfy.firebasestorage.app",
+            messagingSenderId: "887074490735",
+            appId: "1:887074490735:web:547c3e06dff2f8a233409a"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        let produto = null;
+        let quantidade = 1;
+
+        // Obter ID do produto da URL
+        function obterIdProduto() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+
+        // Carregar produto específico
+        async function carregarProduto() {
+            const produtoId = obterIdProduto();
+            
+            if (!produtoId) {
+                document.getElementById('loading').innerHTML = 'Produto não encontrado.';
+                return;
+            }
+
+            try {
+                const snapshot = await database.ref(`produtos/${produtoId}`).once('value');
+                produto = snapshot.val();
+                
+                if (!produto) {
+                    document.getElementById('loading').innerHTML = 'Produto não encontrado.';
+                    return;
+                }
+
+                produto.id = produtoId;
+                exibirProduto();
+                
+                // Atualizar estatísticas de cliques
+                database.ref('adminStats/cliques').transaction((current) => (current || 0) + 1);
+                
+            } catch (error) {
+                console.error('Erro ao carregar produto:', error);
+                document.getElementById('loading').innerHTML = 'Erro ao carregar produto.';
+            }
+        }
+
+        // Exibir produto na tela
+        function exibirProduto() {
+            const container = document.getElementById('productDetail');
+            
+            const precoOriginal = produto.precoPromocional ? 
+                `<span class="price-original-large">R$ ${produto.precoNormal.toFixed(2)}</span>` : '';
+            const precoAtual = produto.precoPromocional || produto.precoNormal;
+
+            container.innerHTML = `
+                <div class="product-detail">
+                    <div class="product-image-large">
+                        ${produto.imagem ? `<img src="${produto.imagem}" alt="${produto.nome}" style="width:100%;height:100%;object-fit:cover;">` : '📖'}
+                    </div>
+                    <div class="product-info-detail">
+                        <div class="product-category">${produto.categoria}</div>
+                        <h1 class="product-title-large">${produto.nome}</h1>
+                        <p class="product-description-large">${produto.descricao}</p>
+                        <div class="product-price-large">
+                            <span class="price-current-large">R$ ${precoAtual.toFixed(2)}</span>
+                            ${precoOriginal}
+                        </div>
+                        <div class="quantity-selector">
+                            <button class="quantity-btn" onclick="alterarQuantidade(-1)">-</button>
+                            <input type="number" class="quantity-input" id="quantityInput" value="1" min="1" onchange="validarQuantidade()">
+                            <button class="quantity-btn" onclick="alterarQuantidade(1)">+</button>
+                        </div>
+                        <button class="btn" onclick="adicionarAoCarrinho()">
+                            Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('loading').style.display = 'none';
+            container.style.display = 'block';
+        }
+
+        // Alterar quantidade
+        function alterarQuantidade(delta) {
+            quantidade = Math.max(1, quantidade + delta);
+            document.getElementById('quantityInput').value = quantidade;
+        }
+
+        // Validar quantidade
+        function validarQuantidade() {
+            const input = document.getElementById('quantityInput');
+            const valor = parseInt(input.value);
+            
+            if (isNaN(valor) || valor < 1) {
+                quantidade = 1;
+                input.value = 1;
+            } else {
+                quantidade = valor;
+            }
+        }
+
+        // Adicionar ao carrinho
+        async function adicionarAoCarrinho() {
+            if (!produto) return;
+
+            try {
+                // Carregar carrinho atual do Firebase
+                const snapshot = await database.ref('carrinho').once('value');
+                let carrinho = snapshot.val() || {};
+
+                if (carrinho[produto.id]) {
+                    carrinho[produto.id].quantidade += quantidade;
+                } else {
+                    carrinho[produto.id] = {
+                        ...produto,
+                        quantidade: quantidade
+                    };
+                }
+
+                // Salvar no Firebase
+                await database.ref('carrinho').set(carrinho);
+                
+                // Atualizar contador do carrinho
+                atualizarContadorCarrinho();
+                
+                // Feedback visual
+                alert(`${quantidade} item(ns) adicionado(s) ao carrinho!`);
+                
+            } catch (error) {
+                console.error('Erro ao adicionar ao carrinho:', error);
+                alert('Erro ao adicionar produto ao carrinho.');
+            }
+        }
+
+        // Atualizar contador do carrinho
+        async function atualizarContadorCarrinho() {
+            try {
+                const snapshot = await database.ref('carrinho').once('value');
+                const carrinho = snapshot.val() || {};
+                
+                const totalItens = Object.values(carrinho).reduce((total, item) => total + item.quantidade, 0);
+                document.getElementById('cartCount').textContent = totalItens;
+            } catch (error) {
+                console.error('Erro ao atualizar contador:', error);
+            }
+        }
+
+        // Inicializar página
+        document.addEventListener('DOMContentLoaded', () => {
+            carregarProduto();
+            atualizarContadorCarrinho();
+        });
+    </script>
+</body>
+</html>
